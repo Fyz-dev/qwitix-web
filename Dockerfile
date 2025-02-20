@@ -14,7 +14,6 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
@@ -35,7 +34,9 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store  \
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
+# Set in compose file
+# ENV NODE_ENV=production
+
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
