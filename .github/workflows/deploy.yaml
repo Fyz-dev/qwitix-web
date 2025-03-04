@@ -29,5 +29,5 @@ jobs:
         working-directory: ./
         run: |
           docker compose -f docker-compose.dev.yaml build
-          docker tag ${{ env.IMAGE_NAME }} ${secrets.CONTAINER_NAME}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
-          docker push ${secrets.CONTAINER_NAME}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          docker tag ${{ env.IMAGE_NAME }} ${{ secrets.CONTAINER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          docker push ${{ secrets.CONTAINER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
