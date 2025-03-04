@@ -28,6 +28,6 @@ jobs:
       - name: Build and push to Azure Container Registry
         working-directory: ./
         run: |
-          docker compose -f docker-compose.dev.yaml build
+          docker compose build
           docker tag ${{ env.IMAGE_NAME }} ${{ secrets.CONTAINER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
           docker push ${{ secrets.CONTAINER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
