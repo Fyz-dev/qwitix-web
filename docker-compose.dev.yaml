@@ -1,5 +1,5 @@
 services:
-  web:
+  qwitix-web:
     build:
       dockerfile: Dockerfile
     ports:
