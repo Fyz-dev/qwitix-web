@@ -48,5 +48,6 @@ jobs:
           port: 22
           script: |
             cd ${{ env.TARGET_DIR }} &&
+            sudo az acr login --name ${{ secrets.CONTAINER_NAME }}
             sudo docker compose pull &&
             sudo docker compose up
