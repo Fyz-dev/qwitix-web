@@ -50,4 +50,4 @@ jobs:
             cd ${{ env.TARGET_DIR }} &&
             sudo az acr login --name ${{ secrets.CONTAINER_NAME }}
             sudo docker compose pull &&
-            sudo docker compose up
+            sudo docker compose up -d
