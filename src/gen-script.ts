@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import path from "path";
-import "dotenv/config";
 
 import { generateApi } from "swagger-typescript-api";
+
+import "dotenv/config";
 
 generateApi({
   name: "api",
