@@ -11,8 +11,6 @@
     "gen:type": "node --loader ts-node/esm ./src/gen-script.ts"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.16.1",
-    "@emotion/react": "^11.14.0",
     "next": "15.3.1",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
