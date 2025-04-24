@@ -9,8 +9,8 @@
  * ---------------------------------------------------------------
  */
 
-import { BuyTicketDTO, CreateTicketDTO, ProblemDetails, ResponseTicketDTO, UpdateTicketDTO } from "./data-contracts";
-import { ContentType, HttpClient, RequestParams } from "./http-client";
+import { BuyTicketDTO, CreateTicketDTO, ProblemDetails, ResponseTicketDTO, UpdateTicketDTO } from './data-contracts';
+import { ContentType, HttpClient, RequestParams } from './http-client';
 
 export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -24,7 +24,7 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
   ticketCreate = (data: CreateTicketDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -41,7 +41,7 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
   ticketBuyCreate = (data: BuyTicketDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket/buy`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -63,10 +63,10 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
   ) =>
     this.request<ResponseTicketDTO[], void>({
       path: `/api/ticket/list`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -80,9 +80,9 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
   ticketDetail = (id: string, params: RequestParams = {}) =>
     this.request<ResponseTicketDTO, ProblemDetails | void>({
       path: `/api/ticket/${id}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -96,7 +96,7 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
   ticketPartialUpdate = (id: string, data: UpdateTicketDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket/${id}`,
-      method: "PATCH",
+      method: 'PATCH',
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -113,7 +113,7 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
   ticketDelete = (id: string, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket/${id}`,
-      method: "DELETE",
+      method: 'DELETE',
       secure: true,
       ...params,
     });

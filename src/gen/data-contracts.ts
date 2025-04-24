@@ -48,10 +48,10 @@ export interface CreateVenueDTO {
 }
 
 export enum EventStatus {
-  Draft = "Draft",
-  Scheduled = "Scheduled",
-  Postponed = "Postponed",
-  Canceled = "Canceled",
+  Draft = 'Draft',
+  Scheduled = 'Scheduled',
+  Postponed = 'Postponed',
+  Canceled = 'Canceled',
 }
 
 export interface ProblemDetails {
@@ -156,10 +156,10 @@ export interface TicketPurchaseDTO {
 }
 
 export enum TransactionStatus {
-  Pending = "Pending",
-  Completed = "Completed",
-  Refunded = "Refunded",
-  Failed = "Failed",
+  Pending = 'Pending',
+  Completed = 'Completed',
+  Refunded = 'Refunded',
+  Failed = 'Failed',
 }
 
 export interface UpdateEventDTO {

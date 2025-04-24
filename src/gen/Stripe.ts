@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-import { HttpClient, RequestParams } from "./http-client";
+import { HttpClient, RequestParams } from './http-client';
 
 export class Stripe<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -23,7 +23,7 @@ export class Stripe<SecurityDataType = unknown> extends HttpClient<SecurityDataT
   stripeWebhooksCreate = (params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/api/stripe/webhooks`,
-      method: "POST",
+      method: 'POST',
       secure: true,
       ...params,
     });

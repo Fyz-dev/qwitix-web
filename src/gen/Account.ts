@@ -9,9 +9,26 @@
  * ---------------------------------------------------------------
  */
 
-import { HttpClient, RequestParams } from "./http-client";
+import { ProblemDetails, ResponseUserDTO } from './data-contracts';
+import { HttpClient, RequestParams } from './http-client';
 
 export class Account<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Account
+   * @name AccountList
+   * @request GET:/api/account
+   * @secure
+   */
+  accountList = (params: RequestParams = {}) =>
+    this.request<ResponseUserDTO, ProblemDetails | void>({
+      path: `/api/account`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
   /**
    * No description
    *
@@ -23,7 +40,7 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
   accountRefreshCreate = (params: RequestParams = {}) =>
     this.request<void, void>({
       path: `/api/account/refresh`,
-      method: "POST",
+      method: 'POST',
       secure: true,
       ...params,
     });
@@ -43,7 +60,7 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
   ) =>
     this.request<void, any>({
       path: `/api/account/login/google`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
       ...params,
@@ -64,7 +81,7 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
   ) =>
     this.request<void, any>({
       path: `/api/account/login/google/callback`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
       ...params,

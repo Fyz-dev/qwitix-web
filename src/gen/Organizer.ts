@@ -9,8 +9,8 @@
  * ---------------------------------------------------------------
  */
 
-import { CreateOrganizerDTO, ProblemDetails, ResponseOrganizerDTO, UpdateOrganizerDTO } from "./data-contracts";
-import { ContentType, HttpClient, RequestParams } from "./http-client";
+import { CreateOrganizerDTO, ProblemDetails, ResponseOrganizerDTO, UpdateOrganizerDTO } from './data-contracts';
+import { ContentType, HttpClient, RequestParams } from './http-client';
 
 export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -24,7 +24,7 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
   organizerCreate = (data: CreateOrganizerDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/organizer`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -49,10 +49,10 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
   ) =>
     this.request<ResponseOrganizerDTO[], void>({
       path: `/api/organizer/list`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -66,9 +66,9 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
   organizerDetail = (id: string, params: RequestParams = {}) =>
     this.request<ResponseOrganizerDTO, ProblemDetails | void>({
       path: `/api/organizer/${id}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -82,7 +82,7 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
   organizerPartialUpdate = (id: string, data: UpdateOrganizerDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/organizer/${id}`,
-      method: "PATCH",
+      method: 'PATCH',
       body: data,
       secure: true,
       type: ContentType.Json,

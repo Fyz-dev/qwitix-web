@@ -9,8 +9,8 @@
  * ---------------------------------------------------------------
  */
 
-import { ProblemDetails, ResponseUserDTO, UpdateUserDTO } from "./data-contracts";
-import { ContentType, HttpClient, RequestParams } from "./http-client";
+import { ProblemDetails, ResponseUserDTO, UpdateUserDTO } from './data-contracts';
+import { ContentType, HttpClient, RequestParams } from './http-client';
 
 export class User<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -24,9 +24,9 @@ export class User<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
   userDetail = (id: string, params: RequestParams = {}) =>
     this.request<ResponseUserDTO, ProblemDetails | void>({
       path: `/api/user/${id}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -40,7 +40,7 @@ export class User<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
   userPartialUpdate = (id: string, data: UpdateUserDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/user/${id}`,
-      method: "PATCH",
+      method: 'PATCH',
       body: data,
       secure: true,
       type: ContentType.Json,

@@ -9,8 +9,8 @@
  * ---------------------------------------------------------------
  */
 
-import { ProblemDetails, ResponseTransactionDTO, TransactionStatus } from "./data-contracts";
-import { HttpClient, RequestParams } from "./http-client";
+import { ProblemDetails, ResponseTransactionDTO, TransactionStatus } from './data-contracts';
+import { HttpClient, RequestParams } from './http-client';
 
 export class Transaction<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -34,10 +34,10 @@ export class Transaction<SecurityDataType = unknown> extends HttpClient<Security
   ) =>
     this.request<ResponseTransactionDTO[], ProblemDetails | void>({
       path: `/api/transaction/list`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -51,9 +51,9 @@ export class Transaction<SecurityDataType = unknown> extends HttpClient<Security
   transactionDetail = (id: string, params: RequestParams = {}) =>
     this.request<ResponseTransactionDTO, ProblemDetails | void>({
       path: `/api/transaction/${id}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
 }
