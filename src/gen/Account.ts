@@ -17,11 +17,11 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags Account
-   * @name AccountList
+   * @name GetAccount
    * @request GET:/api/account
    * @secure
    */
-  accountList = (params: RequestParams = {}) =>
+  getAccount = (params: RequestParams = {}) =>
     this.request<ResponseUserDTO, ProblemDetails | void>({
       path: `/api/account`,
       method: 'GET',
@@ -33,11 +33,11 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags Account
-   * @name AccountRefreshCreate
+   * @name UpdateRefreshToken
    * @request POST:/api/account/refresh
    * @secure
    */
-  accountRefreshCreate = (params: RequestParams = {}) =>
+  updateRefreshToken = (params: RequestParams = {}) =>
     this.request<void, void>({
       path: `/api/account/refresh`,
       method: 'POST',
@@ -48,11 +48,11 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags Account
-   * @name AccountLoginGoogleList
+   * @name GetLoginUrl
    * @request GET:/api/account/login/google
    * @secure
    */
-  accountLoginGoogleList = (
+  getLoginUrl = (
     query?: {
       returnUrl?: string;
     },

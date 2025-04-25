@@ -138,6 +138,7 @@ export interface ResponseUserDTO {
   stripeCustomerId: string | null;
   fullName: string | null;
   email: string | null;
+  token?: string | null;
   imageUrl?: string | null;
 }
 
