@@ -71,6 +71,11 @@ export interface PublishEventDTO {
   endDate: Date;
 }
 
+export interface ResponseAccountDTO {
+  user: ResponseUserDTO;
+  token: string | null;
+}
+
 export interface ResponseEventDTO {
   id: string | null;
   /** @format date-time */
@@ -198,4 +203,8 @@ export interface UpdateVenueDTO {
   city?: string | null;
   state?: string | null;
   zip?: string | null;
+}
+
+export interface UrlResponseDTO {
+  url: string | null;
 }

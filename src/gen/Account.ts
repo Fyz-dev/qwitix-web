@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-import { ProblemDetails, ResponseUserDTO } from './data-contracts';
+import { ProblemDetails, ResponseAccountDTO, UrlResponseDTO } from './data-contracts';
 import { HttpClient, RequestParams } from './http-client';
 
 export class Account<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -22,7 +22,7 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * @secure
    */
   getAccount = (params: RequestParams = {}) =>
-    this.request<ResponseUserDTO, ProblemDetails | void>({
+    this.request<ResponseAccountDTO, ProblemDetails | void>({
       path: `/api/account`,
       method: 'GET',
       secure: true,
@@ -48,42 +48,22 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags Account
-   * @name GetLoginUrl
-   * @request GET:/api/account/login/google
+   * @name GetGoogleLoginUrl
+   * @request GET:/api/account/registration/google
    * @secure
    */
-  getLoginUrl = (
+  getGoogleLoginUrl = (
     query?: {
       returnUrl?: string;
     },
     params: RequestParams = {},
   ) =>
-    this.request<void, any>({
-      path: `/api/account/login/google`,
+    this.request<UrlResponseDTO, any>({
+      path: `/api/account/registration/google`,
       method: 'GET',
       query: query,
       secure: true,
-      ...params,
-    });
-  /**
-   * No description
-   *
-   * @tags Account
-   * @name GoogleLoginCallback
-   * @request GET:/api/account/login/google/callback
-   * @secure
-   */
-  googleLoginCallback = (
-    query?: {
-      returnUrl?: string;
-    },
-    params: RequestParams = {},
-  ) =>
-    this.request<void, any>({
-      path: `/api/account/login/google/callback`,
-      method: 'GET',
-      query: query,
-      secure: true,
+      format: 'json',
       ...params,
     });
 }
