@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 
 import { Open_Sans } from 'next/font/google';
 import './globals.css';
+import { ReactNode } from 'react';
+
+import AuthProvider from '@/providers';
 
 const font = Open_Sans({
   variable: '--font-open-sans',
@@ -16,11 +19,13 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body className={`${font.variable} antialiased`}>{children}</body>
+      <body className={`${font.variable} antialiased`}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

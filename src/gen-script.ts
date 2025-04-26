@@ -1,19 +1,19 @@
 /* eslint-disable no-console */
-import path from "path";
+import path from 'path';
 
-import { generateApi } from "swagger-typescript-api";
+import { generateApi } from 'swagger-typescript-api';
 
-import "dotenv/config";
+import 'dotenv/config';
 
 generateApi({
-  name: "api",
-  output: path.resolve(process.cwd(), "./src/gen"),
+  name: 'api',
+  output: path.resolve(process.cwd(), './src/gen'),
   url:
     process.env.API_SWAGGER_URL ??
     (() => {
-      throw new Error("API_SWAGGER_URL is not defined");
+      throw new Error('API_SWAGGER_URL is not defined');
     })(),
-  httpClientType: "axios",
+  httpClientType: 'axios',
   extractEnums: true,
   modular: true,
   cleanOutput: true,
@@ -22,10 +22,10 @@ generateApi({
   // types
   primitiveTypeConstructs: () => ({
     string: {
-      $default: "string",
-      "date-time": "Date",
+      $default: 'string',
+      'date-time': 'Date',
     },
   }),
-}).catch((error) => {
-  console.error("Error generating API:", error);
+}).catch(error => {
+  console.error('Error generating API:', error);
 });

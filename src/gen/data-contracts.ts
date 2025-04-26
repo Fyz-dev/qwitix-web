@@ -10,29 +10,29 @@
  */
 
 export interface BuyTicketDTO {
-  successUrl: string | null;
-  cancelUrl: string | null;
-  tickets: TicketPurchaseDTO[] | null;
+  successUrl: string;
+  cancelUrl: string;
+  tickets: TicketPurchaseDTO[];
 }
 
 export interface CreateEventDTO {
-  organizerId: string | null;
-  title: string | null;
-  description?: string | null;
-  category: string | null;
+  organizerId: string;
+  title: string;
+  description?: string;
+  category: string;
   venue: CreateVenueDTO;
 }
 
 export interface CreateOrganizerDTO {
-  name: string | null;
-  bio?: string | null;
-  imageUrl?: string | null;
+  name: string;
+  bio?: string;
+  imageUrl?: string;
 }
 
 export interface CreateTicketDTO {
-  eventId: string | null;
-  name: string | null;
-  details?: string | null;
+  eventId: string;
+  name: string;
+  details?: string;
   /** @format double */
   price?: number;
   /** @format int32 */
@@ -40,11 +40,11 @@ export interface CreateTicketDTO {
 }
 
 export interface CreateVenueDTO {
-  name: string | null;
-  address: string | null;
-  city: string | null;
-  state?: string | null;
-  zip?: string | null;
+  name: string;
+  address: string;
+  city: string;
+  state?: string;
+  zip?: string;
 }
 
 export enum EventStatus {
@@ -55,12 +55,12 @@ export enum EventStatus {
 }
 
 export interface ProblemDetails {
-  type?: string | null;
-  title?: string | null;
+  type?: string;
+  title?: string;
   /** @format int32 */
-  status?: number | null;
-  detail?: string | null;
-  instance?: string | null;
+  status?: number;
+  detail?: string;
+  instance?: string;
   [key: string]: any;
 }
 
@@ -73,49 +73,49 @@ export interface PublishEventDTO {
 
 export interface ResponseAccountDTO {
   user: ResponseUserDTO;
-  token: string | null;
+  token: string;
 }
 
 export interface ResponseEventDTO {
-  id: string | null;
+  id: string;
   /** @format date-time */
   createdAt: Date;
   /** @format date-time */
   updatedAt: Date;
-  organizerId: string | null;
-  title: string | null;
-  description?: string | null;
-  category?: string | null;
+  organizerId: string;
+  title: string;
+  description?: string;
+  category?: string;
   status: EventStatus;
   venue: ResponseVenueDTO;
   /** @format date-time */
-  startDate?: Date | null;
+  startDate?: Date;
   /** @format date-time */
-  endDate?: Date | null;
+  endDate?: Date;
 }
 
 export interface ResponseOrganizerDTO {
-  id: string | null;
+  id: string;
   /** @format date-time */
   createdAt: Date;
   /** @format date-time */
   updatedAt: Date;
-  userId: string | null;
-  name: string | null;
-  bio?: string | null;
-  imageUrl?: string | null;
+  userId: string;
+  name: string;
+  bio?: string;
+  imageUrl?: string;
   isVerified: boolean;
 }
 
 export interface ResponseTicketDTO {
-  id: string | null;
+  id: string;
   /** @format date-time */
   createdAt: Date;
   /** @format date-time */
   updatedAt: Date;
-  eventId: string | null;
-  name: string | null;
-  details?: string | null;
+  eventId: string;
+  name: string;
+  details?: string;
   /** @format double */
   price: number;
   /** @format int32 */
@@ -123,40 +123,39 @@ export interface ResponseTicketDTO {
 }
 
 export interface ResponseTransactionDTO {
-  id: string | null;
+  id: string;
   /** @format date-time */
   createdAt: Date;
   /** @format date-time */
   updatedAt: Date;
-  userId: string | null;
-  tickets: TicketPurchaseDTO[] | null;
-  currency: string | null;
+  userId: string;
+  tickets: TicketPurchaseDTO[];
+  currency: string;
   status: TransactionStatus;
 }
 
 export interface ResponseUserDTO {
-  id: string | null;
+  id: string;
   /** @format date-time */
   createdAt: Date;
   /** @format date-time */
   updatedAt: Date;
-  stripeCustomerId: string | null;
-  fullName: string | null;
-  email: string | null;
-  token?: string | null;
-  imageUrl?: string | null;
+  stripeCustomerId: string;
+  fullName: string;
+  email: string;
+  imageUrl?: string;
 }
 
 export interface ResponseVenueDTO {
-  name: string | null;
-  address: string | null;
-  city: string | null;
-  state?: string | null;
-  zip?: string | null;
+  name: string;
+  address: string;
+  city: string;
+  state?: string;
+  zip?: string;
 }
 
 export interface TicketPurchaseDTO {
-  ticketId: string | null;
+  ticketId: string;
   /** @format int32 */
   quantity: number;
 }
@@ -169,42 +168,42 @@ export enum TransactionStatus {
 }
 
 export interface UpdateEventDTO {
-  title?: string | null;
-  description?: string | null;
-  category?: string | null;
+  title?: string;
+  description?: string;
+  category?: string;
   venue?: UpdateVenueDTO;
 }
 
 export interface UpdateOrganizerDTO {
-  name?: string | null;
-  bio?: string | null;
-  imageUrl?: string | null;
-  isVerified?: boolean | null;
+  name?: string;
+  bio?: string;
+  imageUrl?: string;
+  isVerified?: boolean;
 }
 
 export interface UpdateTicketDTO {
-  name?: string | null;
-  details?: string | null;
+  name?: string;
+  details?: string;
   /** @format double */
-  price?: number | null;
+  price?: number;
   /** @format int32 */
-  quantity?: number | null;
+  quantity?: number;
 }
 
 export interface UpdateUserDTO {
-  fullName?: string | null;
-  email?: string | null;
-  imageUrl?: string | null;
+  fullName?: string;
+  email?: string;
+  imageUrl?: string;
 }
 
 export interface UpdateVenueDTO {
-  name?: string | null;
-  address?: string | null;
-  city?: string | null;
-  state?: string | null;
-  zip?: string | null;
+  name?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
 }
 
 export interface UrlResponseDTO {
-  url: string | null;
+  url: string;
 }
