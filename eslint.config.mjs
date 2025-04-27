@@ -8,9 +8,6 @@ import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config} */
 export default tseslint.config(
-  // {
-  //   ...pluginQuery.configs['flat/recommended'],
-  // },
   {
     ignores: ['**/.next/**', '**/node_modules/**', '**/.turbo/**'],
     files: [
