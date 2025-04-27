@@ -4,12 +4,12 @@ import { FC } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Account } from '@/gen/Account';
+import { accountQueryClient } from '@/queries/query-clients';
 
 const LoginOrganizer: FC = async () => {
-  const result = await new Account({
-    baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
-  }).getGoogleLoginUrl({
+  const {
+    data: { url: googleLoginUrl },
+  } = await accountQueryClient().getGoogleLoginUrl({
     returnUrl: 'https://localhost:3000/organizer',
   });
 
@@ -30,7 +30,7 @@ const LoginOrganizer: FC = async () => {
 
                   <div className="flex h-full items-center justify-center">
                     <Button asChild className="w-full">
-                      <Link href={result.data.url}>
+                      <Link href={googleLoginUrl}>
                         <div className="rounded-full bg-white p-1">
                           <svg
                             version="1.1"

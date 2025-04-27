@@ -20,27 +20,28 @@ const data = {
   navMain: [
     {
       title: 'Home',
-      url: '#',
+      url: '/organizer',
       icon: Home,
       isActive: true,
     },
     {
       title: 'Events',
-      url: '#',
+      url: '/organizer/events',
       icon: CalendarClock,
     },
     {
       title: 'Analytics',
-      url: '#',
+      url: '/organizer/analytics',
       icon: ChartSpline,
     },
     {
       title: 'Settings',
-      url: '#',
+      url: '/organizer/settings',
       icon: Settings2,
     },
   ],
 };
+
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const user = useAuthUser(state => state.user);
 
