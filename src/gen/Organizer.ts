@@ -17,11 +17,11 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Organizer
-   * @name OrganizerCreate
+   * @name CreateOrganizer
    * @request POST:/api/organizer
    * @secure
    */
-  organizerCreate = (data: CreateOrganizerDTO, params: RequestParams = {}) =>
+  createOrganizer = (data: CreateOrganizerDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/organizer`,
       method: 'POST',
@@ -34,11 +34,11 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Organizer
-   * @name OrganizerListList
+   * @name GetOrganizerList
    * @request GET:/api/organizer/list
    * @secure
    */
-  organizerListList = (
+  getOrganizerList = (
     query?: {
       /** @format int32 */
       offset?: number;
@@ -59,11 +59,11 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Organizer
-   * @name OrganizerDetail
+   * @name GetOrganizer
    * @request GET:/api/organizer/{id}
    * @secure
    */
-  organizerDetail = (id: string, params: RequestParams = {}) =>
+  getOrganizer = (id: string, params: RequestParams = {}) =>
     this.request<ResponseOrganizerDTO, ProblemDetails | void>({
       path: `/api/organizer/${id}`,
       method: 'GET',
@@ -75,11 +75,11 @@ export class Organizer<SecurityDataType = unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Organizer
-   * @name OrganizerPartialUpdate
+   * @name UpdateOrganizer
    * @request PATCH:/api/organizer/{id}
    * @secure
    */
-  organizerPartialUpdate = (id: string, data: UpdateOrganizerDTO, params: RequestParams = {}) =>
+  updateOrganizer = (id: string, data: UpdateOrganizerDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/organizer/${id}`,
       method: 'PATCH',

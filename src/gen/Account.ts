@@ -48,6 +48,21 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags Account
+   * @name Logout
+   * @request POST:/api/account/logout
+   * @secure
+   */
+  logout = (params: RequestParams = {}) =>
+    this.request<void, any>({
+      path: `/api/account/logout`,
+      method: 'POST',
+      secure: true,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Account
    * @name GetGoogleLoginUrl
    * @request GET:/api/account/registration/google
    * @secure

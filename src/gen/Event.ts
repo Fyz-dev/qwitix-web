@@ -17,11 +17,11 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags Event
-   * @name EventCreate
+   * @name CreateEvent
    * @request POST:/api/event
    * @secure
    */
-  eventCreate = (data: CreateEventDTO, params: RequestParams = {}) =>
+  createEvent = (data: CreateEventDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/event`,
       method: 'POST',
@@ -34,11 +34,11 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags Event
-   * @name EventPublishCreate
+   * @name PublishEvent
    * @request POST:/api/event/{id}/publish
    * @secure
    */
-  eventPublishCreate = (id: string, data: PublishEventDTO, params: RequestParams = {}) =>
+  publishEvent = (id: string, data: PublishEventDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/event/${id}/publish`,
       method: 'POST',
@@ -51,11 +51,11 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags Event
-   * @name EventListList
+   * @name GetEventList
    * @request GET:/api/event/list
    * @secure
    */
-  eventListList = (
+  getEventList = (
     query: {
       organizerId: string;
       /** @format int32 */
@@ -77,11 +77,11 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags Event
-   * @name EventDetail
+   * @name GetEvent
    * @request GET:/api/event/{id}
    * @secure
    */
-  eventDetail = (id: string, params: RequestParams = {}) =>
+  getEvent = (id: string, params: RequestParams = {}) =>
     this.request<ResponseEventDTO, ProblemDetails | void>({
       path: `/api/event/${id}`,
       method: 'GET',
@@ -93,11 +93,11 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags Event
-   * @name EventPartialUpdate
+   * @name UpdateEvent
    * @request PATCH:/api/event/{id}
    * @secure
    */
-  eventPartialUpdate = (id: string, data: UpdateEventDTO, params: RequestParams = {}) =>
+  updateEvent = (id: string, data: UpdateEventDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/event/${id}`,
       method: 'PATCH',
@@ -110,11 +110,11 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags Event
-   * @name EventDelete
+   * @name DeleteEvent
    * @request DELETE:/api/event/{id}
    * @secure
    */
-  eventDelete = (id: string, params: RequestParams = {}) =>
+  deleteEvent = (id: string, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/event/${id}`,
       method: 'DELETE',

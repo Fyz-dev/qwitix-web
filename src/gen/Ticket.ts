@@ -17,11 +17,11 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * No description
    *
    * @tags Ticket
-   * @name TicketCreate
+   * @name CreateTicket
    * @request POST:/api/ticket
    * @secure
    */
-  ticketCreate = (data: CreateTicketDTO, params: RequestParams = {}) =>
+  createTicket = (data: CreateTicketDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket`,
       method: 'POST',
@@ -34,11 +34,11 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * No description
    *
    * @tags Ticket
-   * @name TicketBuyCreate
+   * @name BuyTicket
    * @request POST:/api/ticket/buy
    * @secure
    */
-  ticketBuyCreate = (data: BuyTicketDTO, params: RequestParams = {}) =>
+  buyTicket = (data: BuyTicketDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket/buy`,
       method: 'POST',
@@ -51,11 +51,11 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * No description
    *
    * @tags Ticket
-   * @name TicketListList
+   * @name GetTicketList
    * @request GET:/api/ticket/list
    * @secure
    */
-  ticketListList = (
+  getTicketList = (
     query?: {
       eventId?: string;
     },
@@ -73,11 +73,11 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * No description
    *
    * @tags Ticket
-   * @name TicketDetail
+   * @name GetTicket
    * @request GET:/api/ticket/{id}
    * @secure
    */
-  ticketDetail = (id: string, params: RequestParams = {}) =>
+  getTicket = (id: string, params: RequestParams = {}) =>
     this.request<ResponseTicketDTO, ProblemDetails | void>({
       path: `/api/ticket/${id}`,
       method: 'GET',
@@ -89,11 +89,11 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * No description
    *
    * @tags Ticket
-   * @name TicketPartialUpdate
+   * @name UpdateTicket
    * @request PATCH:/api/ticket/{id}
    * @secure
    */
-  ticketPartialUpdate = (id: string, data: UpdateTicketDTO, params: RequestParams = {}) =>
+  updateTicket = (id: string, data: UpdateTicketDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket/${id}`,
       method: 'PATCH',
@@ -106,11 +106,11 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * No description
    *
    * @tags Ticket
-   * @name TicketDelete
+   * @name DeleteTicket
    * @request DELETE:/api/ticket/{id}
    * @secure
    */
-  ticketDelete = (id: string, params: RequestParams = {}) =>
+  deleteTicket = (id: string, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/ticket/${id}`,
       method: 'DELETE',

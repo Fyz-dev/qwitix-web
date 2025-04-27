@@ -17,11 +17,11 @@ export class Transaction<SecurityDataType = unknown> extends HttpClient<Security
    * No description
    *
    * @tags Transaction
-   * @name TransactionListList
+   * @name GetTransactionList
    * @request GET:/api/transaction/list
    * @secure
    */
-  transactionListList = (
+  getTransactionList = (
     query?: {
       userId?: string;
       /** @format int32 */
@@ -44,11 +44,11 @@ export class Transaction<SecurityDataType = unknown> extends HttpClient<Security
    * No description
    *
    * @tags Transaction
-   * @name TransactionDetail
+   * @name GetTransaction
    * @request GET:/api/transaction/{id}
    * @secure
    */
-  transactionDetail = (id: string, params: RequestParams = {}) =>
+  getTransaction = (id: string, params: RequestParams = {}) =>
     this.request<ResponseTransactionDTO, ProblemDetails | void>({
       path: `/api/transaction/${id}`,
       method: 'GET',

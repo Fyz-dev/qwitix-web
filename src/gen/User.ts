@@ -17,11 +17,11 @@ export class User<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
    * No description
    *
    * @tags User
-   * @name UserDetail
+   * @name GetUser
    * @request GET:/api/user/{id}
    * @secure
    */
-  userDetail = (id: string, params: RequestParams = {}) =>
+  getUser = (id: string, params: RequestParams = {}) =>
     this.request<ResponseUserDTO, ProblemDetails | void>({
       path: `/api/user/${id}`,
       method: 'GET',
@@ -33,11 +33,11 @@ export class User<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
    * No description
    *
    * @tags User
-   * @name UserPartialUpdate
+   * @name UpdateUser
    * @request PATCH:/api/user/{id}
    * @secure
    */
-  userPartialUpdate = (id: string, data: UpdateUserDTO, params: RequestParams = {}) =>
+  updateUser = (id: string, data: UpdateUserDTO, params: RequestParams = {}) =>
     this.request<void, ProblemDetails | void>({
       path: `/api/user/${id}`,
       method: 'PATCH',
