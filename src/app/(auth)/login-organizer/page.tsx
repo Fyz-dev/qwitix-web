@@ -14,16 +14,16 @@ const LoginOrganizer: FC = async () => {
   });
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
+    <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-3xl">
         <div className="flex flex-col gap-6">
-          <Card className="overflow-hidden">
+          <Card className="overflow-hidden p-0">
             <CardContent className="grid p-0 md:grid-cols-2">
               <form className="min-h-[476px] p-6 md:p-8">
                 <div className="flex h-full flex-col gap-6">
                   <div className="flex flex-col items-center text-center">
                     <h1 className="text-2xl font-bold">Welcome back</h1>
-                    <p className="text-balance text-muted-foreground">
+                    <p className="text-muted-foreground text-balance">
                       To continue, sign in with Google
                     </p>
                   </div>
@@ -64,7 +64,7 @@ const LoginOrganizer: FC = async () => {
                   </div>
                 </div>
               </form>
-              <div className="relative hidden bg-muted md:block">
+              <div className="bg-muted relative hidden md:block">
                 <Image
                   src="/assets/placeholder.svg"
                   alt="Image"
@@ -75,7 +75,7 @@ const LoginOrganizer: FC = async () => {
               </div>
             </CardContent>
           </Card>
-          <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
+          <div className="text-muted-foreground [&_a]:hover:text-primary text-center text-xs text-balance [&_a]:underline [&_a]:underline-offset-4">
             By clicking continue, you agree to our{' '}
             <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </div>
