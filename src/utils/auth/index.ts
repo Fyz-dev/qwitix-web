@@ -1,1 +1,1 @@
-export * from './getAccessToken';
+export * from './getAccessTokenFromServer';
