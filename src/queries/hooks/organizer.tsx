@@ -7,6 +7,7 @@ import { organizerQueryClient } from '../query-clients';
 
 import {
   getAccountOrganizerKey,
+  getOrganizerKey,
   getOrganizerListKey,
   getOrganizerListPrefixKey,
 } from './query-key-helper';
@@ -54,7 +55,7 @@ export const useOrganizerQuery = (organizerId: string) => {
   const { token } = useSession();
 
   return useSuspenseQuery({
-    queryKey: ['organizer', organizerId],
+    queryKey: getOrganizerKey(organizerId),
     queryFn: async () => {
       return await organizerQueryClient(token).getOrganizer(organizerId);
     },
