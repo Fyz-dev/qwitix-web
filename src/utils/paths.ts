@@ -3,6 +3,7 @@ export const Paths = {
   Organizer: {
     Home: '/organizer/home',
     Events: '/organizer/events',
+    CreateEvent: '/organizer/events/create',
     Analytics: '/organizer/analytics',
     Settings: '/organizer/settings',
   },

@@ -2,7 +2,9 @@
 
 import { ReactNode } from 'react';
 
-import SuspenseWrapper from '@/components/feauters/suspense-wrapper';
+import Breadcrumbs from '@/components/features/breadcrumbs';
+import SuspenseWrapper from '@/components/features/suspense-wrapper';
+import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
@@ -27,7 +29,9 @@ export default function Layout({
                 variant="outline"
                 className="scale-125 sm:scale-100"
               />
-              {/* <Separator orientation="vertical" className="!h-6" /> */}
+              <Separator orientation="vertical" className="!h-6" />
+
+              <Breadcrumbs />
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
