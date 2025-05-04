@@ -36,7 +36,7 @@ export default tseslint.config(
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-empty-object-type': 'off',
-
+      '@tanstack/query/exhaustive-deps': 'off',
       'import/order': [
         'warn',
         {
