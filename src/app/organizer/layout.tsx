@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 
+import SuspenseWrapper from '@/components/feauters/suspense-wrapper';
 import {
   SidebarInset,
   SidebarProvider,
@@ -29,7 +30,9 @@ export default function Layout({
               {/* <Separator orientation="vertical" className="!h-6" /> */}
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <SuspenseWrapper>{children}</SuspenseWrapper>
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </OrganizerStoreProvider>
