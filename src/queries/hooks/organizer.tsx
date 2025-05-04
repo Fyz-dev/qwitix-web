@@ -5,6 +5,12 @@ import { AxiosResponse } from 'axios';
 
 import { organizerQueryClient } from '../query-clients';
 
+import {
+  getAccountOrganizerKey,
+  getOrganizerListKey,
+  getOrganizerListPrefixKey,
+} from './query-key-helper';
+
 import { CreateOrganizerDTO, ProblemDetails } from '@/gen/data-contracts';
 import { queryClient } from '@/providers';
 import { useSession } from '@/providers/session-provider';
@@ -23,7 +29,7 @@ export const useCreateOrganizerMutation = () => {
     onSuccess: response => {
       if (response.status === 204)
         queryClient.invalidateQueries({
-          queryKey: ['organizer', 'list'],
+          queryKey: getOrganizerListPrefixKey(),
         });
     },
   });
@@ -37,7 +43,7 @@ export const useOrganizerListQuery = (
   const { token } = useSession();
 
   return useSuspenseQuery({
-    queryKey: ['organizer', 'list', query?.limit, query?.offset],
+    queryKey: getOrganizerListKey(),
     queryFn: async () => {
       return await organizerQueryClient(token).getOrganizerList(query);
     },
@@ -72,7 +78,7 @@ export const useUpdateOrganizerMutation = (organizerId: string) => {
     onSuccess: response => {
       if (response.status === 200)
         queryClient.invalidateQueries({
-          queryKey: ['account', 'organizer'],
+          queryKey: getAccountOrganizerKey(),
         });
     },
   });
