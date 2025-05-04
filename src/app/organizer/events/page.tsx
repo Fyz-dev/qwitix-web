@@ -1,7 +1,11 @@
+'use client';
+
 import { FC } from 'react';
 
-const EventsPage: FC = () => {
-  return <div>page</div>;
+import EventsPage from '@/pages/organizer-panel/events';
+
+const Page: FC = () => {
+  return <EventsPage />;
 };
 
-export default EventsPage;
+export default Page;

@@ -1,13 +1,12 @@
 import { Account } from '@/gen/Account';
-import { getAccessToken } from '@/utils/auth';
 
-export const accountQueryClient = () => {
-  const accessToken = getAccessToken();
+export const accountQueryClient = (accessToken?: string) => {
+  console.log('accountQueryClient', accessToken);
 
   return new Account({
     baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
     headers: {
-      Authorization: accessToken ? `Bearer ${accessToken}` : false,
+      Authorization: `Bearer ${accessToken}`,
     },
     withCredentials: true,
   });

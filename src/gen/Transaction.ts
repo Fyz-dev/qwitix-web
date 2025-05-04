@@ -22,8 +22,8 @@ export class Transaction<SecurityDataType = unknown> extends HttpClient<Security
    * @secure
    */
   getTransactionList = (
-    query?: {
-      userId?: string;
+    query: {
+      userId: string;
       /** @format int32 */
       offset?: number;
       /** @format int32 */

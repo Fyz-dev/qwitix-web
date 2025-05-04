@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-import { ProblemDetails, ResponseAccountDTO, UrlResponseDTO } from './data-contracts';
+import { ProblemDetails, ResponseAccountDTO, ResponseOrganizerDTO, UrlResponseDTO } from './data-contracts';
 import { HttpClient, RequestParams } from './http-client';
 
 export class Account<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -24,6 +24,22 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
   getAccount = (params: RequestParams = {}) =>
     this.request<ResponseAccountDTO, ProblemDetails | void>({
       path: `/api/account`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Account
+   * @name GetOrganizerAccount
+   * @request GET:/api/account/organizer
+   * @secure
+   */
+  getOrganizerAccount = (params: RequestParams = {}) =>
+    this.request<ResponseOrganizerDTO, ProblemDetails | void>({
+      path: `/api/account/organizer`,
       method: 'GET',
       secure: true,
       format: 'json',
@@ -68,8 +84,8 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * @secure
    */
   getGoogleLoginUrl = (
-    query?: {
-      returnUrl?: string;
+    query: {
+      returnUrl: string;
     },
     params: RequestParams = {},
   ) =>

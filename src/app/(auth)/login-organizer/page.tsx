@@ -5,12 +5,16 @@ import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { accountQueryClient } from '@/queries/query-clients';
+import { getAccessTokenFromServer } from '@/utils/auth';
+import { Paths } from '@/utils/paths';
 
 const LoginOrganizer: FC = async () => {
   const {
     data: { url: googleLoginUrl },
-  } = await accountQueryClient().getGoogleLoginUrl({
-    returnUrl: 'https://localhost:3000/organizer',
+  } = await accountQueryClient(
+    await getAccessTokenFromServer(),
+  ).getGoogleLoginUrl({
+    returnUrl: `${Paths.BaseUrl}${Paths.Organizer.Home}`,
   });
 
   return (

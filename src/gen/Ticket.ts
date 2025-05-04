@@ -56,8 +56,8 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * @secure
    */
   getTicketList = (
-    query?: {
-      eventId?: string;
+    query: {
+      eventId: string;
     },
     params: RequestParams = {},
   ) =>

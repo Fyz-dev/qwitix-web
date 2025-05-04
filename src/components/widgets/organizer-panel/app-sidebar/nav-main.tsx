@@ -20,7 +20,7 @@ interface NavMainItem {
 }
 
 function checkIsActive(pathName: string, item: NavMainItem) {
-  return pathName === item.url && pathName.startsWith(item.url);
+  return pathName.startsWith(item.url);
 }
 
 export function NavMain({ items }: { items: NavMainItem[] }) {

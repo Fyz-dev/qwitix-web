@@ -39,9 +39,10 @@ export async function POST() {
   cookieStore.set({
     name: 'session',
     value: token,
-    maxAge: decoded.exp,
+    maxAge: maxAge,
     httpOnly: true,
     secure: true,
+    path: '/',
   });
 
   return NextResponse.json(

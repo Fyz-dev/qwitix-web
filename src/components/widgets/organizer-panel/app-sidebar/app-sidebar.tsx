@@ -14,29 +14,30 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar';
-import { useAuthUser } from '@/store';
+import { useAuthUser } from '@/stores';
+import { Paths } from '@/utils/paths';
 
 const data = {
   navMain: [
     {
       title: 'Home',
-      url: '/organizer',
+      url: Paths.Organizer.Home,
       icon: Home,
       isActive: true,
     },
     {
       title: 'Events',
-      url: '/organizer/events',
+      url: Paths.Organizer.Events,
       icon: CalendarClock,
     },
     {
       title: 'Analytics',
-      url: '/organizer/analytics',
+      url: Paths.Organizer.Analytics,
       icon: ChartSpline,
     },
     {
       title: 'Settings',
-      url: '/organizer/settings',
+      url: Paths.Organizer.Settings,
       icon: Settings2,
     },
   ],
@@ -46,7 +47,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const user = useAuthUser(state => state.user);
 
   return (
-    <Sidebar variant="inset" collapsible="icon" {...props}>
+    <Sidebar variant="floating" collapsible="icon" {...props}>
       <SidebarHeader>
         <HomeButton />
       </SidebarHeader>
