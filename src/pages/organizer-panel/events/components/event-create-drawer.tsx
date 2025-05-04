@@ -3,6 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useOrganizerStore } from '../../providers/organizer-provider';
+
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -22,9 +24,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { useAccountOrganizerQuery } from '@/queries/hooks/account';
 import { useCreateEventMutation } from '@/queries/hooks/event';
-import { useAuthUser } from '@/stores';
 import { eventSchema, EventSchemaType } from '@/validations/event';
 
 interface EventCreateDrawerProps {
@@ -36,13 +36,8 @@ const EventCreateDrawer: FC<EventCreateDrawerProps> = ({
   open,
   onOpenChange,
 }) => {
-  const user = useAuthUser(state => state.user);
-
-  const {
-    data: { data: accountOrganizer },
-  } = useAccountOrganizerQuery(user?.id);
-
   const createEventMutation = useCreateEventMutation();
+  const organizer = useOrganizerStore(state => state.organizer);
 
   const form = useForm<EventSchemaType>({
     resolver: zodResolver(eventSchema),
@@ -60,7 +55,7 @@ const EventCreateDrawer: FC<EventCreateDrawerProps> = ({
   const onSubmit = (data: EventSchemaType) => {
     createEventMutation.mutateAsync({
       ...data,
-      organizerId: accountOrganizer.id,
+      organizerId: organizer.id,
       venue: {
         name: 'Test Name',
         address: 'Test Address',

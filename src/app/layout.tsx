@@ -4,6 +4,7 @@ import { Open_Sans } from 'next/font/google';
 import './globals.css';
 import { ReactNode } from 'react';
 
+import { Toaster } from '@/components/ui/sonner';
 import QueryClientProvider from '@/providers/query-client-provider';
 import { SessionProvider } from '@/providers/session-provider';
 import { getAccessTokenFromServer } from '@/utils/auth';
@@ -31,6 +32,7 @@ export default async function RootLayout({
         <SessionProvider token={token}>
           <QueryClientProvider>{children}</QueryClientProvider>
         </SessionProvider>
+        <Toaster />
       </body>
     </html>
   );

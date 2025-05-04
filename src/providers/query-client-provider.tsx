@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { FC, PropsWithChildren } from 'react';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       experimental_prefetchInRender: true,
