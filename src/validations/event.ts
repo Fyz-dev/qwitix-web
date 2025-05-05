@@ -1,5 +1,7 @@
 import z from 'zod';
 
+import { venueSchema } from './venue';
+
 export const eventSchema = z.object({
   title: z
     .string()
@@ -15,6 +17,8 @@ export const eventSchema = z.object({
     .string()
     .nonempty('Category cannot be empty.')
     .max(100, 'Category cannot exceed 100 characters.'),
+
+  venue: venueSchema,
 });
 
 export type EventSchemaType = z.infer<typeof eventSchema>;

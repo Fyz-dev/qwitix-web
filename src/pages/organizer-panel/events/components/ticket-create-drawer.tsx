@@ -1,9 +1,8 @@
 'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-
-import { useOrganizerStore } from '../../providers/organizer-provider';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -24,27 +23,25 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { useCreateEventMutation } from '@/queries/hooks/event';
-import { eventSchema, EventSchemaType } from '@/validations/event';
+import { Textarea } from '@/components/ui/textarea';
+import { ticketSchema, TicketSchemaType } from '@/validations/ticket';
 
-interface EventCreateDrawerProps {
+interface TicketCreateDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-const EventCreateDrawer: FC<EventCreateDrawerProps> = ({
+const TicketCreateDrawer: FC<TicketCreateDrawerProps> = ({
   open,
   onOpenChange,
 }) => {
-  const createEventMutation = useCreateEventMutation();
-  const organizer = useOrganizerStore(state => state.organizer);
-
-  const form = useForm<EventSchemaType>({
-    resolver: zodResolver(eventSchema),
+  const form = useForm<TicketSchemaType>({
+    resolver: zodResolver(ticketSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      category: '',
+      name: '',
+      details: '',
+      price: 0,
+      quantity: 1,
     },
   });
 
@@ -52,66 +49,37 @@ const EventCreateDrawer: FC<EventCreateDrawerProps> = ({
     onOpenChange(open);
     form.reset();
   };
-  const onSubmit = (data: EventSchemaType) => {
-    createEventMutation.mutateAsync({
-      ...data,
-      organizerId: organizer.id,
-      venue: {
-        name: 'Test Name',
-        address: 'Test Address',
-        city: 'Test City',
-        state: 'Test State',
-        zip: '12345',
-      },
-    });
 
+  const onSubmit = (data: TicketSchemaType) => {
     onClose(false);
   };
 
   return (
-    <Sheet
-      open={open}
-      onOpenChange={open => {
-        onClose(open);
-      }}
-    >
-      <SheetContent className="flex w-[30%] flex-col sm:max-w-none">
+    <Sheet open={open} onOpenChange={onClose}>
+      <SheetContent>
         <SheetHeader>
-          <SheetTitle>Create Event</SheetTitle>
+          <SheetTitle>Create Ticket</SheetTitle>
           <SheetDescription>
-            Add a new event by providing the required information. Click save
-            when you're done.
+            Add a new ticket for event. Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
+
         <Form {...form}>
           <form
-            id="event-form"
+            id="ticket-form"
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex-1 space-y-5 px-4"
           >
             <FormField
               control={form.control}
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem className="space-y-1">
                   <FormLabel className="gap-0">
-                    Title<span className="text-red-500">*</span>
+                    Name<span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Enter a title" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem className="space-y-1">
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Enter a description" />
+                    <Input {...field} placeholder="Enter a name" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -120,14 +88,46 @@ const EventCreateDrawer: FC<EventCreateDrawerProps> = ({
 
             <FormField
               control={form.control}
-              name="category"
+              name="details"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel>Details</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter a details"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel>Price</FormLabel>
+                  <FormControl>
+                    <Input min={0} type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="quantity"
               render={({ field }) => (
                 <FormItem className="space-y-1">
                   <FormLabel className="gap-0">
-                    Category<span className="text-red-500">*</span>
+                    Quantity<span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Enter a category" />
+                    <Input min={1} type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,11 +135,12 @@ const EventCreateDrawer: FC<EventCreateDrawerProps> = ({
             />
           </form>
         </Form>
-        <SheetFooter className="flex-row justify-end gap-2">
+
+        <SheetFooter className="gap-2">
           <SheetClose asChild>
             <Button variant="outline">Close</Button>
           </SheetClose>
-          <Button form="event-form" type="submit">
+          <Button form="ticket-form" type="submit">
             Save changes
           </Button>
         </SheetFooter>
@@ -148,4 +149,4 @@ const EventCreateDrawer: FC<EventCreateDrawerProps> = ({
   );
 };
 
-export default EventCreateDrawer;
+export default TicketCreateDrawer;

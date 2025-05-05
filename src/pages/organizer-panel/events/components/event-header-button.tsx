@@ -1,19 +1,19 @@
 'use client';
 
 import { Plus } from 'lucide-react';
+import Link from 'next/link';
 import { FC } from 'react';
 
-import { useEventStore } from '../providers/event-store-provider';
-
 import { Button } from '@/components/ui/button';
+import { Paths } from '@/utils/paths';
 
 const EventHeaderButton: FC = () => {
-  const { setOpen } = useEventStore(state => state);
-
   return (
-    <Button onClick={() => setOpen('create')}>
-      Create
-      <Plus />
+    <Button asChild>
+      <Link href={Paths.Organizer.CreateEvent}>
+        Create
+        <Plus />
+      </Link>
     </Button>
   );
 };

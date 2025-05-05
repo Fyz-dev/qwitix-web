@@ -3,20 +3,24 @@ import { AxiosResponse } from 'axios';
 
 import { eventQueryClient } from '../query-clients';
 
-import { getEventListKey } from './query-key-helper';
+import { getEventListKey, getEventListPrefixKey } from './query-key-helper';
 
 import { CreateEventDTO, ProblemDetails } from '@/gen/data-contracts';
-import { useSession } from '@/providers';
+import { queryClient, useSession } from '@/providers';
 
 export const useCreateEventMutation = () => {
+  const { token } = useSession();
+
   return useMutation<AxiosResponse<void, void>, ProblemDetails, CreateEventDTO>(
     {
       mutationFn: async data => {
-        return await (await eventQueryClient()).createEvent(data);
+        return await eventQueryClient(token).createEvent(data);
       },
       onSuccess: response => {
-        // if (response.status === 204) {
-        // }
+        if (response.status === 204)
+          queryClient.invalidateQueries({
+            queryKey: getEventListPrefixKey(),
+          });
       },
     },
   );
