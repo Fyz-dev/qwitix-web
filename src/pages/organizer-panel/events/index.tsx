@@ -1,12 +1,14 @@
 'use client';
 
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 
 import { useOrganizerStore } from '../providers/organizer-provider';
 
-import EventCard from './components/event-card';
 import EventHeaderButton from './components/event-header-button';
+import EventList from './components/event-list';
+import { EventStatusOptions } from './types';
 
+import SuspenseWrapper from '@/components/features/suspense-wrapper';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -16,26 +18,27 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-import { useEventsListQuery } from '@/queries/hooks/event';
+import { useDebounce } from '@/hooks/use-debounce';
 
 interface EventsPageProps extends PropsWithChildren {}
 
-const selectOptions = new Map<string, string>([
-  ['all', 'All states'],
-  ['draft', 'Draft'],
-  ['scheduled', 'Scheduled'],
+const selectOptions = new Map<EventStatusOptions, string>([
+  ['All', 'All states'],
+  ['Draft', 'Draft'],
+  ['Scheduled', 'Scheduled'],
 ]);
 
 const EventsPage: FC<EventsPageProps> = () => {
   const organizer = useOrganizerStore(state => state.organizer);
-  const {
-    data: { data: events },
-  } = useEventsListQuery({
-    organizerId: organizer.id,
-  });
+
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedStatus, setSelectedStatus] =
+    useState<EventStatusOptions>('All');
+
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   return (
-    <div className="space-y-4 py-4">
+    <div className="relative space-y-4 py-4">
       <div className="flex flex-wrap items-center justify-between gap-x-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Events</h2>
@@ -51,10 +54,17 @@ const EventsPage: FC<EventsPageProps> = () => {
           <Input
             placeholder="Filter events..."
             className="h-9 w-40 lg:w-[250px]"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
           />
-          <Select value="all">
+          <Select
+            value={selectedStatus}
+            onValueChange={value => {
+              setSelectedStatus(value as EventStatusOptions);
+            }}
+          >
             <SelectTrigger>
-              <SelectValue>{selectOptions.get('all')}</SelectValue>
+              <SelectValue>{selectOptions.get(selectedStatus)}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               {Array.from(selectOptions.entries()).map(([value, label]) => (
@@ -69,11 +79,13 @@ const EventsPage: FC<EventsPageProps> = () => {
 
       <Separator className="shadow-sm" />
 
-      <div className="flex flex-col gap-4">
-        {events.map(event => (
-          <EventCard key={event.id} event={event} />
-        ))}
-      </div>
+      <SuspenseWrapper spinnerProps={{ size: 'medium' }}>
+        <EventList
+          selectedStatus={selectedStatus}
+          organizer={organizer}
+          searchQuery={debouncedSearchQuery}
+        />
+      </SuspenseWrapper>
     </div>
   );
 };
