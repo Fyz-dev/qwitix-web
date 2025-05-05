@@ -11,7 +11,6 @@ import { useOrganizerStore } from '../../providers/organizer-provider';
 import { useVenueStore } from '../providers/venue-store-provider';
 
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import {
   Form,
   FormControl,

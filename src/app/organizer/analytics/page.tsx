@@ -2,8 +2,8 @@ import { FC } from 'react';
 
 import ComingSoon from '@/components/widgets/coming-soon';
 
-const OrganizerPage: FC = () => {
+const AnalyticsPage: FC = () => {
   return <ComingSoon />;
 };
 
-export default OrganizerPage;
+export default AnalyticsPage;
