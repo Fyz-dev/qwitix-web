@@ -9,7 +9,15 @@
  * ---------------------------------------------------------------
  */
 
-import { CreateEventDTO, ProblemDetails, PublishEventDTO, ResponseEventDTO, UpdateEventDTO } from './data-contracts';
+import {
+  CreateEventDTO,
+  EventStatus,
+  ProblemDetails,
+  PublishEventDTO,
+  ResponseEventDTO,
+  ResponseEventDTOPaginationResponse,
+  UpdateEventDTO,
+} from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
 export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -62,10 +70,12 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
       offset?: number;
       /** @format int32 */
       limit?: number;
+      status?: EventStatus;
+      searchQuery?: string;
     },
     params: RequestParams = {},
   ) =>
-    this.request<ResponseEventDTO[], void>({
+    this.request<ResponseEventDTOPaginationResponse, void>({
       path: `/api/event/list`,
       method: 'GET',
       query: query,

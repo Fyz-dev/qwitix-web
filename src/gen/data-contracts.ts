@@ -94,6 +94,13 @@ export interface ResponseEventDTO {
   endDate?: Date;
 }
 
+export interface ResponseEventDTOPaginationResponse {
+  items: ResponseEventDTO[];
+  hasNextPage: boolean;
+  /** @format int32 */
+  totalCount: number;
+}
+
 export interface ResponseOrganizerDTO {
   id: string;
   /** @format date-time */
