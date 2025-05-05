@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 
 import {
   Breadcrumb,
@@ -17,10 +17,14 @@ const HIDDEN_SEGMENTS = ['organizer'];
 
 const Breadcrumbs: FC = () => {
   const pathname = usePathname() ?? '';
+  const segments = pathname.split('/').filter(Boolean);
 
-  const rawSegments = pathname.split('/').filter(Boolean);
-  const visibleSegments = rawSegments.filter(
+  const visibleSegments = segments.filter(
     segment => !HIDDEN_SEGMENTS.includes(segment),
+  );
+
+  const firstVisibleIndex = segments.findIndex(
+    s => !HIDDEN_SEGMENTS.includes(s),
   );
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -31,31 +35,21 @@ const Breadcrumbs: FC = () => {
         {visibleSegments.map((segment, index) => {
           const isLast = index === visibleSegments.length - 1;
           const href =
-            '/' +
-            rawSegments
-              .slice(
-                0,
-                rawSegments.findIndex(s => !HIDDEN_SEGMENTS.includes(s)) +
-                  index +
-                  1,
-              )
-              .join('/');
+            '/' + segments.slice(0, firstVisibleIndex + index + 1).join('/');
 
           return (
-            <>
-              {index !== 0 && <BreadcrumbSeparator />}
-              <div key={href} className="flex items-center">
-                <BreadcrumbItem>
-                  {isLast ? (
-                    <BreadcrumbPage>{capitalize(segment)}</BreadcrumbPage>
-                  ) : (
-                    <BreadcrumbLink asChild>
-                      <Link href={href}>{capitalize(segment)}</Link>
-                    </BreadcrumbLink>
-                  )}
-                </BreadcrumbItem>
-              </div>
-            </>
+            <Fragment key={href}>
+              {index > 0 && <BreadcrumbSeparator />}
+              <BreadcrumbItem>
+                {isLast ? (
+                  <BreadcrumbPage>{capitalize(segment)}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link href={href}>{capitalize(segment)}</Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+            </Fragment>
           );
         })}
       </BreadcrumbList>
