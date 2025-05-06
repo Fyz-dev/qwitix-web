@@ -3,19 +3,14 @@ import { createStore } from 'zustand';
 import { ResponseEventDTO } from '@/gen/data-contracts';
 
 export interface EventState {
-  event?: ResponseEventDTO;
+  event: ResponseEventDTO;
 }
 
-export interface EventActions {
-  setEvent: (event?: ResponseEventDTO) => void;
-}
+export type EventStore = EventState;
 
-export type EventStore = EventState & EventActions;
-
-export const createEventStore = (event?: ResponseEventDTO) => {
-  return createStore<EventStore>()(set => ({
+export const createEventStore = (event: ResponseEventDTO) => {
+  return createStore<EventStore>()(() => ({
     event: event,
-    setEvent: event => set({ event }),
   }));
 };
 

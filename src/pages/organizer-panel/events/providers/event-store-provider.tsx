@@ -18,7 +18,7 @@ import {
 import { ResponseEventDTO } from '@/gen/data-contracts';
 
 interface EventStoreProviderProps extends PropsWithChildren {
-  event?: ResponseEventDTO;
+  event: ResponseEventDTO;
 }
 
 export const StoreContext = createContext<EventStoreApi | undefined>(undefined);

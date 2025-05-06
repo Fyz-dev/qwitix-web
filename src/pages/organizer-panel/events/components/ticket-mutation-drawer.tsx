@@ -3,6 +3,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+
+import { useEventStore } from '../providers/event-store-provider';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -23,18 +26,33 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
+import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
+import { ResponseTicketDTO } from '@/gen/data-contracts';
+import {
+  useCreateTicketMutation,
+  useUpdateTicketMutation,
+} from '@/queries/hooks/ticket';
 import { ticketSchema, TicketSchemaType } from '@/validations/ticket';
 
 interface TicketCreateDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  ticket?: ResponseTicketDTO;
 }
 
-const TicketCreateDrawer: FC<TicketCreateDrawerProps> = ({
+const TicketMutationDrawer: FC<TicketCreateDrawerProps> = ({
   open,
   onOpenChange,
+  ticket,
 }) => {
+  const isUpdate = !!ticket;
+
+  const event = useEventStore(state => state.event);
+
+  const createMutation = useCreateTicketMutation();
+  const updateMutation = useUpdateTicketMutation(ticket?.id ?? '');
+
   const form = useForm<TicketSchemaType>({
     resolver: zodResolver(ticketSchema),
     defaultValues: {
@@ -51,22 +69,44 @@ const TicketCreateDrawer: FC<TicketCreateDrawerProps> = ({
   };
 
   const onSubmit = (data: TicketSchemaType) => {
-    onClose(false);
+    const promise = isUpdate
+      ? updateMutation.mutateAsync({ ...data })
+      : createMutation.mutateAsync({ ...data, eventId: event.id });
+
+    const toastMessage = isUpdate
+      ? {
+          loading: 'Updating ticket...',
+          success: 'Ticket updated!',
+          error: 'Failed to update ticket.',
+        }
+      : {
+          loading: 'Creating ticket...',
+          success: 'Ticket created!',
+          error: 'Failed to create ticket.',
+        };
+
+    toast.promise(promise, toastMessage);
+
+    promise.then(() => onClose(false));
   };
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Create Ticket</SheetTitle>
+          <SheetTitle>{isUpdate ? 'Edit Ticket' : 'Create Ticket'}</SheetTitle>
           <SheetDescription>
-            Add a new ticket for event. Click save when you&apos;re done.
+            {isUpdate
+              ? 'Edit the ticket details as needed.'
+              : 'Add a new ticket for event.'}
+            Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
 
         <Form {...form}>
           <form
             id="ticket-form"
+            noValidate
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex-1 space-y-5 px-4"
           >
@@ -109,9 +149,9 @@ const TicketCreateDrawer: FC<TicketCreateDrawerProps> = ({
               name="price"
               render={({ field }) => (
                 <FormItem className="space-y-1">
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel>Price (USD)</FormLabel>
                   <FormControl>
-                    <Input min={0} type="number" {...field} />
+                    <Input min={0} placeholder="0 $" type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -141,7 +181,14 @@ const TicketCreateDrawer: FC<TicketCreateDrawerProps> = ({
             <Button variant="outline">Close</Button>
           </SheetClose>
           <Button form="ticket-form" type="submit">
-            Save changes
+            {createMutation.isPending ? (
+              <>
+                <Spinner size="small" className="text-current" />
+                Saving...
+              </>
+            ) : (
+              'Save changes'
+            )}
           </Button>
         </SheetFooter>
       </SheetContent>
@@ -149,4 +196,4 @@ const TicketCreateDrawer: FC<TicketCreateDrawerProps> = ({
   );
 };
 
-export default TicketCreateDrawer;
+export default TicketMutationDrawer;

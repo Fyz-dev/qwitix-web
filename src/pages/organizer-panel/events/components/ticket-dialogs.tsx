@@ -4,14 +4,14 @@ import { FC } from 'react';
 
 import { useTicketStore } from '../providers/ticket-store-provider';
 
-import TicketCreateDrawer from './ticket-create-drawer';
+import TicketMutationDrawer from './ticket-mutation-drawer';
 
 const TicketDialogs: FC = () => {
   const { open, setOpen } = useTicketStore(state => state);
 
   return (
     <>
-      <TicketCreateDrawer
+      <TicketMutationDrawer
         open={open === 'create'}
         onOpenChange={() => setOpen('create')}
       />
