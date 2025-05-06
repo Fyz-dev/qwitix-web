@@ -1,13 +1,18 @@
+'use client';
+
 import {
   Copy,
   Edit,
   EllipsisVertical,
   MapPin,
+  Rocket,
   Tag,
   Ticket,
   Trash2,
 } from 'lucide-react';
+import Link from 'next/link';
 import { FC } from 'react';
+import { toast } from 'sonner';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -21,12 +26,42 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { EventStatus, ResponseEventDTO } from '@/gen/data-contracts';
 import { cn } from '@/lib/utils';
+import {
+  useCreateEventMutation,
+  useDeleteEventMutation,
+} from '@/queries/hooks/event';
+import { Paths } from '@/utils/paths';
 
 interface EventCardProps {
   event: ResponseEventDTO;
 }
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
+  const deleteMutation = useDeleteEventMutation(event.id);
+  const duplicateMutation = useCreateEventMutation();
+
+  const onDelete = () => {
+    const promise = deleteMutation.mutateAsync();
+
+    toast.promise(promise, {
+      loading: 'Deleting event...',
+      success: () => 'Event successfully deleted!',
+      error: 'Failed to delete event.',
+    });
+  };
+
+  const onDuplicate = () => {
+    const promise = duplicateMutation.mutateAsync({
+      ...event,
+    });
+
+    toast.promise(promise, {
+      loading: 'Duplicating event...',
+      success: () => 'Event successfully duplicated!',
+      error: 'Failed to duplicate event.',
+    });
+  };
+
   return (
     <Card className="flex flex-row items-center px-6">
       <div className="bg-muted flex h-[70px] w-[110px] items-center justify-center rounded-xl">
@@ -75,14 +110,20 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         <DropdownMenuContent>
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <Edit className="text-foreground" />
-              <span>Manage Event</span>
+              <Rocket className="text-foreground" />
+              <span>Publish</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={Paths.Organizer.ManageEvent(event.id)}>
+                <Edit className="text-foreground" />
+                <span>Manage Event</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDuplicate}>
               <Copy className="text-foreground" />
               <span>Duplicate</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={onDelete}>
               <Trash2 className="text-foreground" />
               <span>Delete</span>
             </DropdownMenuItem>

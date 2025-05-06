@@ -9,7 +9,11 @@ import { eventQueryClient } from '../query-clients';
 
 import { getEventListKey, getEventListPrefixKey } from './query-key-helper';
 
-import { CreateEventDTO, ProblemDetails } from '@/gen/data-contracts';
+import {
+  CreateEventDTO,
+  ProblemDetails,
+  PublishEventDTO,
+} from '@/gen/data-contracts';
 import { queryClient, useSession } from '@/providers';
 
 const EVENT_LIST_PAGE_SIZE = 5;
@@ -30,6 +34,26 @@ export const useCreateEventMutation = () => {
       },
     },
   );
+};
+
+export const usePublishEventMutation = (id: string) => {
+  const { token } = useSession();
+
+  return useMutation<
+    AxiosResponse<void, void>,
+    ProblemDetails,
+    PublishEventDTO
+  >({
+    mutationFn: async data => {
+      return await eventQueryClient(token).publishEvent(id, data);
+    },
+    onSuccess: response => {
+      if (response.status === 200)
+        queryClient.invalidateQueries({
+          queryKey: getEventListPrefixKey(),
+        });
+    },
+  });
 };
 
 export const useEventsListQuery = (
@@ -70,6 +94,22 @@ export const useInfiniteEventsQuery = (
       return currentOffset < (lastPage.totalCount ?? 0)
         ? currentOffset
         : undefined;
+    },
+  });
+};
+
+export const useDeleteEventMutation = (id: string) => {
+  const { token } = useSession();
+
+  return useMutation<AxiosResponse<void, void>, ProblemDetails>({
+    mutationFn: async () => {
+      return await eventQueryClient(token).deleteEvent(id);
+    },
+    onSuccess: response => {
+      if (response.status === 204)
+        queryClient.invalidateQueries({
+          queryKey: getEventListPrefixKey(),
+        });
     },
   });
 };

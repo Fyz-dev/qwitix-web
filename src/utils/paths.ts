@@ -4,6 +4,7 @@ export const Paths = {
     Home: '/organizer/home',
     Events: '/organizer/events',
     CreateEvent: '/organizer/events/create',
+    ManageEvent: (id: string) => `/organizer/events/manage-event/${id}`,
     Analytics: '/organizer/analytics',
     Settings: '/organizer/settings',
   },

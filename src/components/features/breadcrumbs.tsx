@@ -15,19 +15,25 @@ import {
 
 const HIDDEN_SEGMENTS = ['organizer'];
 
+const isId = (segment: string) => /^[a-f\d]{24}$/i.test(segment);
+
 const Breadcrumbs: FC = () => {
   const pathname = usePathname() ?? '';
   const segments = pathname.split('/').filter(Boolean);
 
   const visibleSegments = segments.filter(
-    segment => !HIDDEN_SEGMENTS.includes(segment),
+    segment => !HIDDEN_SEGMENTS.includes(segment) && !isId(segment),
   );
 
   const firstVisibleIndex = segments.findIndex(
     s => !HIDDEN_SEGMENTS.includes(s),
   );
 
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const formatSegment = (s: string) =>
+    s
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
 
   return (
     <Breadcrumb>
@@ -42,10 +48,10 @@ const Breadcrumbs: FC = () => {
               {index > 0 && <BreadcrumbSeparator />}
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage>{capitalize(segment)}</BreadcrumbPage>
+                  <BreadcrumbPage>{formatSegment(segment)}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link href={href}>{capitalize(segment)}</Link>
+                    <Link href={href}>{formatSegment(segment)}</Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
