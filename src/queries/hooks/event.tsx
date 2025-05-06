@@ -1,8 +1,4 @@
-import {
-  useInfiniteQuery,
-  useMutation,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 import { eventQueryClient } from '../query-clients';
@@ -53,19 +49,6 @@ export const usePublishEventMutation = (id: string) => {
         queryClient.invalidateQueries({
           queryKey: getEventListPrefixKey(),
         });
-    },
-  });
-};
-
-export const useEventsListQuery = (
-  query: Parameters<ReturnType<typeof eventQueryClient>['getEventList']>[0],
-) => {
-  const { token } = useSession();
-
-  return useSuspenseQuery({
-    queryKey: getEventListKey(query),
-    queryFn: async () => {
-      return await eventQueryClient(token).getEventList(query);
     },
   });
 };
