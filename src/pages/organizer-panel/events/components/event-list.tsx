@@ -1,3 +1,4 @@
+'use client';
 import { Bird } from 'lucide-react';
 import { FC } from 'react';
 

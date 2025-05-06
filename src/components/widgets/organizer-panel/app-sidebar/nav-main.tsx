@@ -24,7 +24,7 @@ function checkIsActive(pathName: string, item: NavMainItem) {
 }
 
 export function NavMain({ items }: { items: NavMainItem[] }) {
-  const pathName = usePathname();
+  const pathName = usePathname() ?? '';
 
   return (
     <SidebarGroup>
