@@ -15,13 +15,22 @@ import {
   VenueStoreApi,
 } from '../stores/venue-store';
 
+import { CreateVenueDTO } from '@/gen/data-contracts';
+
+interface VenueStoreProviderProps extends PropsWithChildren {
+  venue?: CreateVenueDTO;
+}
+
 export const StoreContext = createContext<VenueStoreApi | undefined>(undefined);
 
-export const VenueStoreProvider: FC<PropsWithChildren> = ({ children }) => {
+export const VenueStoreProvider: FC<VenueStoreProviderProps> = ({
+  venue,
+  children,
+}) => {
   const storeRef = useRef<VenueStoreApi | null>(null);
 
   if (storeRef.current === null) {
-    storeRef.current = createVenueStore();
+    storeRef.current = createVenueStore(venue);
   }
 
   return (

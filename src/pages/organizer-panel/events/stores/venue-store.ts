@@ -16,10 +16,10 @@ export interface VenueActions {
 
 export type VenueStore = VenueState & VenueActions;
 
-export const createVenueStore = () => {
+export const createVenueStore = (venue?: CreateVenueDTO) => {
   return createStore<VenueStore>()((set, get) => ({
     open: undefined,
-    venue: undefined,
+    venue: venue,
     setOpen: open => set({ open: get().open === open ? undefined : open }),
     setVenue: venue => set({ venue }),
   }));

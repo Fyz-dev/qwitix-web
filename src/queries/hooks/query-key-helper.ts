@@ -1,4 +1,4 @@
-import { eventQueryClient } from '../query-clients';
+import { eventQueryClient, ticketQueryClient } from '../query-clients';
 
 export const getAccountOrganizerKey = () => ['account', 'organizer'] as const;
 
@@ -20,3 +20,8 @@ export const getEventListKey = (
     query.searchQuery,
     query.status,
   ] as const;
+
+export const getTicketListPrefixKey = () => ['ticket', 'list'] as const;
+export const getTicketListKey = (
+  query: Parameters<ReturnType<typeof ticketQueryClient>['getTicketList']>[0],
+) => [...getEventListPrefixKey(), query.eventId] as const;
