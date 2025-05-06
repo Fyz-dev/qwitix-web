@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useVenueStore } from '../providers/venue-store-provider';
@@ -63,6 +63,17 @@ const VenueMutationDrawer: FC<VenueMutationDrawerProps> = ({
 
     onClose(false);
   };
+
+  useEffect(() => {
+    if (open)
+      form.reset({
+        name: venue?.name || '',
+        address: venue?.address || '',
+        city: venue?.city || '',
+        state: venue?.state || '',
+        zip: venue?.zip || '',
+      });
+  }, [open]);
 
   return (
     <Sheet open={open} onOpenChange={onClose}>

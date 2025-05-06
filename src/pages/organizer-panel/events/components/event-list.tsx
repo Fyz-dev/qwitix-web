@@ -5,7 +5,7 @@ import { EventStatusOptions } from '../types';
 
 import EventCard from './event-card';
 
-import InfiniteScroll from '@/components/features/inifinite-scroll';
+import InfiniteScroll from '@/components/features/infinite-scroll';
 import {
   EventStatus,
   ResponseEventDTO,
