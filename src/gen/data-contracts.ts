@@ -85,7 +85,7 @@ export interface ResponseEventDTO {
   organizerId: string;
   title: string;
   description?: string;
-  category?: string;
+  category: string;
   status: EventStatus;
   venue: ResponseVenueDTO;
   /** @format date-time */
