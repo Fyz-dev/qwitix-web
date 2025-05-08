@@ -14,6 +14,8 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { toast } from 'sonner';
 
+import { useEventStore } from '../providers/event-store-provider';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -26,10 +28,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { EventStatus, ResponseEventDTO } from '@/gen/data-contracts';
 import { cn } from '@/lib/utils';
-import {
-  useCreateEventMutation,
-  useDeleteEventMutation,
-} from '@/queries/hooks/event';
+import { useCreateEventMutation } from '@/queries/hooks/event';
 import { Paths } from '@/utils/paths';
 
 interface EventCardProps {
@@ -37,18 +36,11 @@ interface EventCardProps {
 }
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
-  const deleteMutation = useDeleteEventMutation(event.id);
   const duplicateMutation = useCreateEventMutation();
 
-  const onDelete = () => {
-    const promise = deleteMutation.mutateAsync();
-
-    toast.promise(promise, {
-      loading: 'Deleting event...',
-      success: () => 'Event successfully deleted!',
-      error: 'Failed to delete event.',
-    });
-  };
+  const { setOpen: setDialogEventOpen, setEvent } = useEventStore(
+    state => state,
+  );
 
   const onDuplicate = () => {
     const promise = duplicateMutation.mutateAsync({
@@ -123,7 +115,12 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
               <Copy className="text-foreground" />
               <span>Duplicate</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onDelete}>
+            <DropdownMenuItem
+              onClick={() => {
+                setEvent(event);
+                setDialogEventOpen('delete');
+              }}
+            >
               <Trash2 className="text-foreground" />
               <span>Delete</span>
             </DropdownMenuItem>

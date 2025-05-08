@@ -5,8 +5,6 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { useEventStore } from '../providers/event-store-provider';
-
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -28,7 +26,7 @@ import {
 } from '@/components/ui/sheet';
 import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
-import { ResponseTicketDTO } from '@/gen/data-contracts';
+import { ResponseEventDTO, ResponseTicketDTO } from '@/gen/data-contracts';
 import {
   useCreateTicketMutation,
   useUpdateTicketMutation,
@@ -38,17 +36,17 @@ import { ticketSchema, TicketSchemaType } from '@/validations/ticket';
 interface TicketCreateDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  event: ResponseEventDTO;
   ticket?: ResponseTicketDTO;
 }
 
 const TicketMutationDrawer: FC<TicketCreateDrawerProps> = ({
   open,
   onOpenChange,
+  event,
   ticket,
 }) => {
   const isUpdate = !!ticket;
-
-  const event = useEventStore(state => state.event);
 
   const createMutation = useCreateTicketMutation();
   const updateMutation = useUpdateTicketMutation(ticket?.id ?? '');

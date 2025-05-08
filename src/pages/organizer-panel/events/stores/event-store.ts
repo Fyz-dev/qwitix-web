@@ -2,15 +2,25 @@ import { createStore } from 'zustand';
 
 import { ResponseEventDTO } from '@/gen/data-contracts';
 
+type EventDialogType = 'delete';
+
 export interface EventState {
-  event: ResponseEventDTO;
+  event?: ResponseEventDTO;
+  open?: EventDialogType;
 }
 
-export type EventStore = EventState;
+export interface EventActions {
+  setOpen: (open?: EventDialogType) => void;
+  setEvent: (event?: ResponseEventDTO) => void;
+}
 
-export const createEventStore = (event: ResponseEventDTO) => {
-  return createStore<EventStore>()(() => ({
+export type EventStore = EventState & EventActions;
+
+export const createEventStore = (event?: ResponseEventDTO) => {
+  return createStore<EventStore>()((set, get) => ({
     event: event,
+    setOpen: open => set({ open: get().open === open ? undefined : open }),
+    setEvent: event => set({ event }),
   }));
 };
 

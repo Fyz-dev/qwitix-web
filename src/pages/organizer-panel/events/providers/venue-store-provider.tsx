@@ -44,7 +44,7 @@ export const useVenueStore = <T,>(selector: (store: VenueStore) => T): T => {
   const storeContext = useContext(StoreContext);
 
   if (!storeContext)
-    throw new Error(`useVenueStore must be used within CounterStoreProvider`);
+    throw new Error(`useVenueStore must be used within VenueStoreProvider`);
 
   return useStore(storeContext, selector);
 };

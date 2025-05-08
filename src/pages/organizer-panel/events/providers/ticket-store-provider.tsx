@@ -37,7 +37,7 @@ export const useTicketStore = <T,>(selector: (store: TicketStore) => T): T => {
   const storeContext = useContext(StoreContext);
 
   if (!storeContext)
-    throw new Error(`useTicketStore must be used within CounterStoreProvider`);
+    throw new Error(`useTicketStore must be used within TicketStoreProvider`);
 
   return useStore(storeContext, selector);
 };

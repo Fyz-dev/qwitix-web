@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import EventMutationFormField from '../components/event-mutation-form-field';
+import TicketList from '../components/ticket-list';
 import { useTicketStore } from '../providers/ticket-store-provider';
 import { useVenueStore } from '../providers/venue-store-provider';
 
@@ -73,6 +74,9 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
           render={() => (
             <FormItem>
               <FormLabel className="gap-0">Tickets</FormLabel>
+
+              <TicketList event={event} />
+
               <FormControl>
                 <Button
                   onClick={() => setDrawerTicketOpen('create')}
@@ -92,6 +96,7 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
             </FormItem>
           )}
         />
+
         <Button type="submit" disabled={createEventMutation.isPending}>
           {createEventMutation.isPending ? (
             <>
