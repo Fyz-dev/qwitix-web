@@ -5,10 +5,11 @@ import { FC } from 'react';
 import { useEventStore } from '../providers/event-store-provider';
 import { useTicketStore } from '../providers/ticket-store-provider';
 
+import TicketDeleteDialog from './ticket-delete-dialog';
 import TicketMutationDrawer from './ticket-mutation-drawer';
 
 const TicketDialogs: FC = () => {
-  const { open, setOpen } = useTicketStore(state => state);
+  const { open, setOpen, ticket } = useTicketStore(state => state);
   const event = useEventStore(state => state.event);
 
   return (
@@ -24,8 +25,17 @@ const TicketDialogs: FC = () => {
             open={open === 'edit'}
             onOpenChange={() => setOpen('edit')}
             event={event}
+            ticket={ticket}
           />
         </>
+      )}
+
+      {ticket && (
+        <TicketDeleteDialog
+          open={open === 'delete'}
+          onOpenChange={() => setOpen('delete')}
+          ticket={ticket}
+        />
       )}
     </>
   );

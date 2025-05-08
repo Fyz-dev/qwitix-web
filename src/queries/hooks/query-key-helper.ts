@@ -24,5 +24,5 @@ export const getEventListKey = (
 export const getTicketListPrefixKey = () => ['ticket', 'list'] as const;
 export const getTicketListKey = (
   query: Parameters<ReturnType<typeof ticketQueryClient>['getTicketList']>[0],
-) => [...getEventListPrefixKey(), query.eventId] as const;
+) => [...getTicketListPrefixKey(), query.eventId] as const;
 export const getTicketKey = (eventId: string) => ['ticket', eventId] as const;

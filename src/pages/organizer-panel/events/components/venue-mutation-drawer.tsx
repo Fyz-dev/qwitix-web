@@ -18,7 +18,6 @@ import {
 import { Input } from '@/components/ui/input';
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -173,9 +172,6 @@ const VenueMutationDrawer: FC<VenueMutationDrawerProps> = ({
         </Form>
 
         <SheetFooter className="gap-2">
-          <SheetClose asChild>
-            <Button variant="outline">Close</Button>
-          </SheetClose>
           <Button form="ticket-form" type="submit">
             Save changes
           </Button>

@@ -1,5 +1,9 @@
+'use client';
+
 import { Edit } from 'lucide-react';
 import { FC } from 'react';
+
+import { useTicketStore } from '../providers/ticket-store-provider';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,6 +15,8 @@ interface TicketCardProps {
 }
 
 const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
+  const { setOpen, setTicket } = useTicketStore(state => state);
+
   return (
     <Card className="flex-row items-center justify-between px-3 py-2">
       <div className="flex flex-col gap-1">
@@ -35,6 +41,10 @@ const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
         type="button"
         variant="ghost"
         size="icon"
+        onClick={() => {
+          setTicket(ticket);
+          setOpen('edit');
+        }}
       >
         <Edit />
       </Button>

@@ -1,9 +1,12 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FC } from 'react';
+import { Trash2 } from 'lucide-react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+
+import { useTicketStore } from '../providers/ticket-store-provider';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -17,7 +20,6 @@ import {
 import { Input } from '@/components/ui/input';
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -48,22 +50,31 @@ const TicketMutationDrawer: FC<TicketCreateDrawerProps> = ({
 }) => {
   const isUpdate = !!ticket;
 
-  const createMutation = useCreateTicketMutation();
-  const updateMutation = useUpdateTicketMutation(ticket?.id ?? '');
+  const { setOpen, setTicket } = useTicketStore(state => state);
+
+  const createMutation = useCreateTicketMutation(event.id);
+  const updateMutation = useUpdateTicketMutation(ticket?.id ?? '', event.id);
 
   const form = useForm<TicketSchemaType>({
     resolver: zodResolver(ticketSchema),
     defaultValues: {
-      name: '',
-      details: '',
-      price: 0,
-      quantity: 1,
+      name: ticket?.name || '',
+      details: ticket?.details || '',
+      price: ticket?.price || 0,
+      quantity: ticket?.quantity || 1,
     },
   });
 
   const onClose = (open: boolean) => {
     onOpenChange(open);
     form.reset();
+  };
+
+  const onDelete = () => {
+    onClose(false);
+
+    setTicket(ticket);
+    setOpen('delete');
   };
 
   const onSubmit = (data: TicketSchemaType) => {
@@ -88,9 +99,19 @@ const TicketMutationDrawer: FC<TicketCreateDrawerProps> = ({
     promise.then(() => onClose(false));
   };
 
+  useEffect(() => {
+    if (open)
+      form.reset({
+        name: ticket?.name || '',
+        details: ticket?.details || '',
+        price: ticket?.price || 0,
+        quantity: ticket?.quantity || 1,
+      });
+  }, [open]);
+
   return (
     <Sheet open={open} onOpenChange={onClose}>
-      <SheetContent>
+      <SheetContent onOpenAutoFocus={e => e.preventDefault()}>
         <SheetHeader>
           <SheetTitle>{isUpdate ? 'Edit Ticket' : 'Create Ticket'}</SheetTitle>
           <SheetDescription>
@@ -174,11 +195,15 @@ const TicketMutationDrawer: FC<TicketCreateDrawerProps> = ({
           </form>
         </Form>
 
-        <SheetFooter className="gap-2">
-          <SheetClose asChild>
-            <Button variant="outline">Close</Button>
-          </SheetClose>
-          <Button form="ticket-form" type="submit">
+        <SheetFooter className="flex-row">
+          {isUpdate && (
+            <Button type="button" variant="destructive" onClick={onDelete}>
+              <Trash2 />
+              Delete
+            </Button>
+          )}
+
+          <Button form="ticket-form" type="submit" className="flex-1">
             {createMutation.isPending ? (
               <>
                 <Spinner size="small" className="text-current" />

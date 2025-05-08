@@ -17,7 +17,7 @@ import {
 } from '@/gen/data-contracts';
 import { queryClient, useSession } from '@/providers';
 
-export const useCreateTicketMutation = () => {
+export const useCreateTicketMutation = (eventId: string) => {
   const { token } = useSession();
 
   return useMutation<
@@ -31,7 +31,7 @@ export const useCreateTicketMutation = () => {
     onSuccess: response => {
       if (response.status === 204)
         queryClient.invalidateQueries({
-          queryKey: getTicketListPrefixKey(),
+          queryKey: getTicketListKey({ eventId }),
         });
     },
   });
@@ -84,7 +84,7 @@ export const useTicketQuery = (id: string) => {
   });
 };
 
-export const useUpdateTicketMutation = (id: string) => {
+export const useUpdateTicketMutation = (id: string, eventId: string) => {
   const { token } = useSession();
 
   return useMutation<
@@ -98,7 +98,7 @@ export const useUpdateTicketMutation = (id: string) => {
     onSuccess: response => {
       if (response.status === 200) {
         queryClient.invalidateQueries({
-          queryKey: getTicketListPrefixKey(),
+          queryKey: getTicketListKey({ eventId }),
         });
 
         queryClient.invalidateQueries({
