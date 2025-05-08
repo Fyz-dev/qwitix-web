@@ -21,4 +21,31 @@ export const eventSchema = z.object({
   venue: venueSchema,
 });
 
+export const eventSchemaPublish = z
+  .object({
+    startDate: z
+      .date({
+        required_error: 'StartDate is required',
+        invalid_type_error: 'StartDate must be a valid date',
+      })
+      .refine(date => date >= new Date(), {
+        message: 'StartDate cannot be earlier than the current date.',
+      }),
+
+    endDate: z.date({
+      required_error: 'EndDate is required',
+      invalid_type_error: 'EndDate must be a valid date',
+    }),
+  })
+  .superRefine((data, ctx) => {
+    if (data.endDate && data.endDate < data.startDate) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'EndDate cannot be earlier than StartDate.',
+        path: ['endDate'],
+      });
+    }
+  });
+
 export type EventSchemaType = z.infer<typeof eventSchema>;
+export type EventSchemaPublishType = z.infer<typeof eventSchemaPublish>;

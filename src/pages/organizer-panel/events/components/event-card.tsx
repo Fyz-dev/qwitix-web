@@ -101,7 +101,12 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                setEvent(event);
+                setDialogEventOpen('publish');
+              }}
+            >
               <Rocket className="text-foreground" />
               <span>Publish</span>
             </DropdownMenuItem>

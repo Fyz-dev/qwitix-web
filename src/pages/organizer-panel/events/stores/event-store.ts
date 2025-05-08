@@ -2,7 +2,7 @@ import { createStore } from 'zustand';
 
 import { ResponseEventDTO } from '@/gen/data-contracts';
 
-type EventDialogType = 'delete';
+type EventDialogType = 'delete' | 'publish';
 
 export interface EventState {
   event?: ResponseEventDTO;
