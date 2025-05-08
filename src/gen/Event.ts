@@ -64,8 +64,8 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @secure
    */
   getEventList = (
-    query: {
-      organizerId: string;
+    query?: {
+      organizerId?: string;
       /** @format int32 */
       offset?: number;
       /** @format int32 */
@@ -129,6 +129,22 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
       path: `/api/event/${id}`,
       method: 'DELETE',
       secure: true,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Event
+   * @name GetEventCategories
+   * @request GET:/api/event/categories
+   * @secure
+   */
+  getEventCategories = (params: RequestParams = {}) =>
+    this.request<string[], void>({
+      path: `/api/event/categories`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
       ...params,
     });
 }
