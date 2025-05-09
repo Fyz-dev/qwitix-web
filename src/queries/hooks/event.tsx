@@ -1,9 +1,17 @@
-import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 import { eventQueryClient } from '../query-clients';
 
-import { getEventListKey, getEventListPrefixKey } from './query-key-helper';
+import {
+  getEventCategoryListKey,
+  getEventListKey,
+  getEventListPrefixKey,
+} from './query-key-helper';
 
 import {
   CreateEventDTO,
@@ -112,6 +120,17 @@ export const useDeleteEventMutation = (id: string) => {
         queryClient.invalidateQueries({
           queryKey: getEventListPrefixKey(),
         });
+    },
+  });
+};
+
+export const useEventCategoryListQuery = () => {
+  const { token } = useSession();
+
+  return useSuspenseQuery({
+    queryKey: getEventCategoryListKey(),
+    queryFn: async () => {
+      return await eventQueryClient(token).getEventCategories();
     },
   });
 };

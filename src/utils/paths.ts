@@ -8,4 +8,8 @@ export const Paths = {
     Analytics: '/organizer/analytics',
     Settings: '/organizer/settings',
   },
+  Main: {
+    Events: '/events',
+    Event: (id: string) => `/events/${id}`,
+  },
 };

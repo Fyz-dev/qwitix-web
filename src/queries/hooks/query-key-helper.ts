@@ -14,12 +14,13 @@ export const getEventListKey = (
 ) =>
   [
     ...getEventListPrefixKey(),
-    query.organizerId,
-    query.limit,
-    query.offset,
-    query.searchQuery,
-    query.status,
+    query?.organizerId,
+    query?.limit,
+    query?.offset,
+    query?.searchQuery,
+    query?.status,
   ] as const;
+export const getEventCategoryListKey = () => ['event', 'category'] as const;
 
 export const getTicketListPrefixKey = () => ['ticket', 'list'] as const;
 export const getTicketListKey = (
