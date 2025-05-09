@@ -59,10 +59,7 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
   };
 
   useEffect(() => {
-    if (venue)
-      form.setValue('venue', venue, {
-        shouldValidate: true,
-      });
+    if (venue) form.setValue('venue', venue);
   }, [venue]);
 
   return (

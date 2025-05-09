@@ -21,7 +21,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
       <Link href={Paths.Main.Event(event.id)} className="absolute inset-0" />
 
       <div className="bg-muted flex h-[184px] w-full items-center justify-center rounded-xl">
-        <Ticket />
+        <Ticket className="size-12" />
       </div>
       <CardContent className="flex flex-row items-center gap-6">
         <div className="flex flex-col text-center font-semibold">
