@@ -88,6 +88,7 @@ export interface ResponseEventDTO {
   category: string;
   status: EventStatus;
   venue: ResponseVenueDTO;
+  tickets?: ResponseTicketDTO[];
   /** @format date-time */
   startDate?: Date;
   /** @format date-time */

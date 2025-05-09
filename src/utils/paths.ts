@@ -11,5 +11,6 @@ export const Paths = {
   Main: {
     Events: '/events',
     Event: (id: string) => `/events/${id}`,
+    BuyTickets: (id: string) => `/events/${id}/buy-tickets`,
   },
 };

@@ -1,6 +1,5 @@
-import { format } from 'path';
-
-import { CalendarDays, MapPin, Tag, Ticket } from 'lucide-react';
+import { CalendarDays, MapPin, Ticket } from 'lucide-react';
+import Link from 'next/link';
 import { FC } from 'react';
 
 import {
@@ -13,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ResponseEventDTO } from '@/gen/data-contracts';
 import { formatFullDateTime } from '@/utils/formatDate';
+import { Paths } from '@/utils/paths';
 
 interface EventPageProps {
   event: ResponseEventDTO;
@@ -27,10 +27,10 @@ const EventPage: FC<EventPageProps> = ({ event }) => {
     : undefined;
 
   return (
-    <div className="mt-4 mb-6 flex flex-col gap-9">
-      <section className="bg-muted flex h-[348px] w-full items-center justify-center rounded-xl">
+    <div className="mt-14 mb-14 flex flex-col gap-9">
+      <div className="bg-muted flex h-[348px] w-full items-center justify-center rounded-xl">
         <Ticket className="size-12" />
-      </section>
+      </div>
       <section className="flex justify-between">
         <div className="flex flex-2/3 flex-col gap-4">
           <h1 className="text-3xl font-bold">{event.title}</h1>
@@ -56,17 +56,25 @@ const EventPage: FC<EventPageProps> = ({ event }) => {
           </div>
         </div>
         <div className="flex-1/5">
-          <Card>
-            <CardContent className="flex flex-col items-center gap-4">
-              <div className="flex flex-col text-center">
-                <span className="text-muted-foreground">
-                  Tickets starting at
-                </span>
-                <span className="text-xl font-semibold">USD 200</span>
-              </div>
-              <Button className="w-full">Buy tickets</Button>
-            </CardContent>
-          </Card>
+          {event.tickets && event.tickets.length > 0 && (
+            <Card>
+              <CardContent className="flex flex-col items-center gap-4">
+                <div className="flex flex-col text-center">
+                  <span className="text-muted-foreground">
+                    Tickets starting at
+                  </span>
+                  <span className="text-xl font-semibold">
+                    USD {Math.min(...event.tickets.map(t => t.price))}
+                  </span>
+                </div>
+                <Button asChild className="w-full">
+                  <Link href={Paths.Main.BuyTickets(event.id)}>
+                    Buy tickets
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </section>
       {event.description && (
