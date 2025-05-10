@@ -12,5 +12,7 @@ export const Paths = {
     Events: '/events',
     Event: (id: string) => `/events/${id}`,
     BuyTickets: (id: string) => `/events/${id}/buy-tickets`,
+    AccountDashboard: '/my-account/dashboard',
+    AccountSettings: '/my-account/settings',
   },
 };

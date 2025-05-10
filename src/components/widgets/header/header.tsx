@@ -1,10 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
+import AuthDropdown from './components/auth-dropdown';
+import LoginButton from './components/login-button';
+
 import { Button } from '@/components/ui/button';
+import { useAuthUser } from '@/stores';
 
 const navItems = [
   { name: 'MLB', href: '/mlb' },
@@ -16,7 +19,7 @@ const navItems = [
 ];
 
 const Header: FC = () => {
-  const router = useRouter();
+  const { user, logout } = useAuthUser(state => state);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
@@ -49,7 +52,7 @@ const Header: FC = () => {
 
         <div className="flex items-center">
           <Button
-            className="text-base text-foreground"
+            className="text-muted-foreground text-base"
             variant="link"
             size="lg"
             asChild
@@ -57,19 +60,11 @@ const Header: FC = () => {
             <Link href="/login-organizer">Organize Events</Link>
           </Button>
 
-          <Button
-            onClick={() => {
-              router.push(
-                'https://qwitix.germanywestcentral.cloudapp.azure.com/api/account/login/google?returnUrl=https://localhost:3000/',
-              );
-            }}
-            className="rounded-full"
-          >
-            Log In
-          </Button>
-          {/* <Avatar className="hidden h-10 w-10 bg-pink-500 md:flex">
-            <AvatarFallback>B</AvatarFallback>
-          </Avatar> */}
+          {user ? (
+            <AuthDropdown user={user} logout={logout} />
+          ) : (
+            <LoginButton />
+          )}
         </div>
       </div>
     </header>

@@ -18,3 +18,18 @@ export const useAccountOrganizerQuery = () => {
     },
   });
 };
+
+export const useGoogleLoginUrlQuery = (
+  query: Parameters<
+    ReturnType<typeof accountQueryClient>['getGoogleLoginUrl']
+  >[0],
+) => {
+  const { token } = useSession();
+
+  return useSuspenseQuery({
+    queryKey: getAccountOrganizerKey(),
+    queryFn: async () => {
+      return await accountQueryClient(token).getGoogleLoginUrl(query);
+    },
+  });
+};
