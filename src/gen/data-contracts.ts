@@ -76,6 +76,10 @@ export interface ResponseAccountDTO {
   token: string;
 }
 
+export interface ResponseBuyTicketDTO {
+  url: string;
+}
+
 export interface ResponseEventDTO {
   id: string;
   /** @format date-time */
@@ -128,6 +132,23 @@ export interface ResponseTicketDTO {
   price: number;
   /** @format int32 */
   quantity: number;
+}
+
+export interface ResponseTicketWithSoldDTO {
+  id: string;
+  /** @format date-time */
+  createdAt: Date;
+  /** @format date-time */
+  updatedAt: Date;
+  eventId: string;
+  name: string;
+  details?: string;
+  /** @format double */
+  price: number;
+  /** @format int32 */
+  quantity: number;
+  /** @format int32 */
+  sold?: number;
 }
 
 export interface ResponseTransactionDTO {

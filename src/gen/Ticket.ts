@@ -9,7 +9,14 @@
  * ---------------------------------------------------------------
  */
 
-import { BuyTicketDTO, CreateTicketDTO, ProblemDetails, ResponseTicketDTO, UpdateTicketDTO } from './data-contracts';
+import {
+  BuyTicketDTO,
+  CreateTicketDTO,
+  ProblemDetails,
+  ResponseBuyTicketDTO,
+  ResponseTicketWithSoldDTO,
+  UpdateTicketDTO,
+} from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
 export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -39,12 +46,13 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * @secure
    */
   buyTicket = (data: BuyTicketDTO, params: RequestParams = {}) =>
-    this.request<void, ProblemDetails | void>({
+    this.request<ResponseBuyTicketDTO, ProblemDetails | void>({
       path: `/api/ticket/buy`,
       method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: 'json',
       ...params,
     });
   /**
@@ -61,7 +69,7 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
     },
     params: RequestParams = {},
   ) =>
-    this.request<ResponseTicketDTO[], void>({
+    this.request<ResponseTicketWithSoldDTO[], void>({
       path: `/api/ticket/list`,
       method: 'GET',
       query: query,
@@ -78,7 +86,7 @@ export class Ticket<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * @secure
    */
   getTicket = (id: string, params: RequestParams = {}) =>
-    this.request<ResponseTicketDTO, ProblemDetails | void>({
+    this.request<ResponseTicketWithSoldDTO, ProblemDetails | void>({
       path: `/api/ticket/${id}`,
       method: 'GET',
       secure: true,
