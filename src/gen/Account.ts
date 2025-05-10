@@ -9,8 +9,14 @@
  * ---------------------------------------------------------------
  */
 
-import { ProblemDetails, ResponseAccountDTO, ResponseOrganizerDTO, UrlResponseDTO } from './data-contracts';
-import { HttpClient, RequestParams } from './http-client';
+import {
+  ProblemDetails,
+  ResponseAccountDTO,
+  ResponseOrganizerDTO,
+  UpdateUserDTO,
+  UrlResponseDTO,
+} from './data-contracts';
+import { ContentType, HttpClient, RequestParams } from './http-client';
 
 export class Account<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
@@ -27,6 +33,23 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
       method: 'GET',
       secure: true,
       format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Account
+   * @name UpdateAccount
+   * @request PATCH:/api/account
+   * @secure
+   */
+  updateAccount = (data: UpdateUserDTO, params: RequestParams = {}) =>
+    this.request<void, ProblemDetails | void>({
+      path: `/api/account`,
+      method: 'PATCH',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       ...params,
     });
   /**
