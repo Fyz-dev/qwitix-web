@@ -60,6 +60,10 @@ export const useBuyTicketMutation = () => {
             queryKey: getTicketKey(ticket.ticketId),
           });
         });
+
+        queryClient.invalidateQueries({
+          queryKey: getTicketListPrefixKey(),
+        });
       }
     },
   });

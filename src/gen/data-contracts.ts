@@ -163,6 +163,13 @@ export interface ResponseTransactionDTO {
   status: TransactionStatus;
 }
 
+export interface ResponseTransactionDTOPaginationResponse {
+  items: ResponseTransactionDTO[];
+  hasNextPage: boolean;
+  /** @format int32 */
+  totalCount: number;
+}
+
 export interface ResponseUserDTO {
   id: string;
   /** @format date-time */

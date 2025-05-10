@@ -9,7 +9,12 @@
  * ---------------------------------------------------------------
  */
 
-import { ProblemDetails, ResponseTransactionDTO, TransactionStatus } from './data-contracts';
+import {
+  ProblemDetails,
+  ResponseTransactionDTO,
+  ResponseTransactionDTOPaginationResponse,
+  TransactionStatus,
+} from './data-contracts';
 import { HttpClient, RequestParams } from './http-client';
 
 export class Transaction<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -31,7 +36,7 @@ export class Transaction<SecurityDataType = unknown> extends HttpClient<Security
     },
     params: RequestParams = {},
   ) =>
-    this.request<ResponseTransactionDTO[], ProblemDetails | void>({
+    this.request<ResponseTransactionDTOPaginationResponse, ProblemDetails | void>({
       path: `/api/transaction/list`,
       method: 'GET',
       query: query,
