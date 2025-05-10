@@ -1,7 +1,9 @@
 import { FC } from 'react';
 
+import MyAccountDashboardPage from '@/pages/main/my-account/dashboard';
+
 const AccountDashboard: FC = () => {
-  return <div>page</div>;
+  return <MyAccountDashboardPage />;
 };
 
 export default AccountDashboard;
