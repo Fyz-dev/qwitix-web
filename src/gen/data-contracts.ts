@@ -158,7 +158,7 @@ export interface ResponseTransactionDTO {
   /** @format date-time */
   updatedAt: Date;
   userId: string;
-  tickets: TicketPurchaseDTO[];
+  tickets: ResponseTicketDTO[];
   currency: string;
   status: TransactionStatus;
 }
