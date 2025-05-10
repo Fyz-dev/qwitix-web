@@ -13,6 +13,7 @@ import {
   BuyTicketDTO,
   CreateTicketDTO,
   ProblemDetails,
+  ResponseBuyTicketDTO,
   UpdateTicketDTO,
 } from '@/gen/data-contracts';
 import { queryClient, useSession } from '@/providers';
@@ -40,7 +41,11 @@ export const useCreateTicketMutation = (eventId: string) => {
 export const useBuyTicketMutation = () => {
   const { token } = useSession();
 
-  return useMutation<AxiosResponse<void, void>, ProblemDetails, BuyTicketDTO>({
+  return useMutation<
+    AxiosResponse<ResponseBuyTicketDTO, void>,
+    ProblemDetails,
+    BuyTicketDTO
+  >({
     mutationFn: async data => {
       return await ticketQueryClient(token).buyTicket(data);
     },
