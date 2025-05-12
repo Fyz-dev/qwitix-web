@@ -161,6 +161,7 @@ export interface ResponseTransactionDTO {
   tickets: ResponseTicketDTO[];
   currency: string;
   status: TransactionStatus;
+  stripePaymentLink?: string;
 }
 
 export interface ResponseTransactionDTOPaginationResponse {
