@@ -45,7 +45,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
-  const user = useAuthUser(state => state.user);
+  const { user, logout } = useAuthUser(state => state);
   const organizer = useOrganizerStore(state => state.organizer);
 
   return (
@@ -57,7 +57,9 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        {user && organizer.id && <NavUser user={user} organizer={organizer} />}
+        {user && organizer.id && (
+          <NavUser logout={logout} user={user} organizer={organizer} />
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronsUpDown, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -22,9 +23,12 @@ import { ResponseOrganizerDTO, ResponseUserDTO } from '@/gen/data-contracts';
 interface NavUserProps {
   user: ResponseUserDTO;
   organizer: ResponseOrganizerDTO;
+  logout: () => void;
 }
 
-export function NavUser({ user, organizer }: NavUserProps) {
+export function NavUser({ user, organizer, logout }: NavUserProps) {
+  const router = useRouter();
+
   const { isMobile } = useSidebar();
 
   const avatarFallback = organizer.name.slice(0, 2).toUpperCase();
@@ -75,7 +79,12 @@ export function NavUser({ user, organizer }: NavUserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                logout();
+                router.push('/');
+              }}
+            >
               <LogOut />
               Log out
             </DropdownMenuItem>

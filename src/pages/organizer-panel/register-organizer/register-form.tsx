@@ -5,8 +5,6 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { useOrganizerStore } from '../../providers/organizer-provider';
-
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -19,31 +17,30 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useUpdateOrganizerMutation } from '@/queries/hooks/organizer';
+import { useCreateOrganizerMutation } from '@/queries/hooks/organizer';
 import { organizerSchema, OrganizerSchemaType } from '@/validations/organizer';
 
-const ProfileForm: FC = () => {
-  const organizer = useOrganizerStore(state => state.organizer);
-  const updateOrganizerMutation = useUpdateOrganizerMutation(organizer.id);
+const RegisterForm: FC = () => {
+  const createOrganizerMutation = useCreateOrganizerMutation();
 
   const form = useForm<OrganizerSchemaType>({
     resolver: zodResolver(organizerSchema),
     defaultValues: {
-      name: organizer.name,
-      bio: organizer.bio || '',
+      name: '',
+      bio: '',
       imageUrl: undefined,
     },
   });
 
   const onSubmit = (data: OrganizerSchemaType) => {
-    const promise = updateOrganizerMutation.mutateAsync({
+    const promise = createOrganizerMutation.mutateAsync({
       ...data,
     });
 
     toast.promise(promise, {
-      loading: 'Updating organizer...',
-      success: () => 'Organizer successfully updated!',
-      error: 'Failed to update organizer.',
+      loading: 'Creating organizer...',
+      success: () => 'Organizer successfully created!',
+      error: 'Failed to create organizer.',
     });
   };
 
@@ -92,10 +89,12 @@ const ProfileForm: FC = () => {
           )}
         />
 
-        <Button type="submit">Update profile</Button>
+        <Button className="w-full" type="submit">
+          Continue
+        </Button>
       </form>
     </Form>
   );
 };
 
-export default ProfileForm;
+export default RegisterForm;

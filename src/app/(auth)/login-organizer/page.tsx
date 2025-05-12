@@ -68,13 +68,13 @@ const LoginOrganizer: FC = async () => {
                   </div>
                 </div>
               </form>
-              <div className="bg-muted relative hidden md:block">
+              <div className="relative hidden bg-gradient-to-br from-blue-700 to-blue-500 md:block">
                 <Image
-                  src="/assets/placeholder.svg"
-                  alt="Image"
+                  src="/assets/organizer-dashboard.png"
+                  alt="organizer dashboard"
                   width={1000}
                   height={1000}
-                  className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                  className="back absolute inset-0 top-[50%] left-[50%] -translate-y-1/2 scale-170 rounded-lg ring-4 ring-white/20"
                 />
               </div>
             </CardContent>
