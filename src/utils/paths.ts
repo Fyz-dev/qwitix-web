@@ -2,6 +2,7 @@ type QueryParams = Record<string, string | number | boolean | undefined>;
 
 export const Paths = {
   BaseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+  Unauthorized: '/unauthorized',
   Organizer: {
     Login: '/login-organizer',
     Register: '/register-organizer',
