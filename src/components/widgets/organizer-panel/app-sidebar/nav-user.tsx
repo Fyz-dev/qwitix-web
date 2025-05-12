@@ -17,16 +17,17 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { ResponseUserDTO } from '@/gen/data-contracts';
+import { ResponseOrganizerDTO, ResponseUserDTO } from '@/gen/data-contracts';
 
 interface NavUserProps {
   user: ResponseUserDTO;
+  organizer: ResponseOrganizerDTO;
 }
 
-export function NavUser({ user }: NavUserProps) {
+export function NavUser({ user, organizer }: NavUserProps) {
   const { isMobile } = useSidebar();
 
-  const avatarFallback = user.fullName.slice(0, 2).toUpperCase();
+  const avatarFallback = organizer.name.slice(0, 2).toUpperCase();
 
   return (
     <SidebarMenu>
@@ -38,13 +39,13 @@ export function NavUser({ user }: NavUserProps) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.imageUrl} alt={user.fullName} />
+                <AvatarImage src={organizer.imageUrl} alt={organizer.name} />
                 <AvatarFallback className="rounded-lg">
                   {avatarFallback}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.fullName}</span>
+                <span className="truncate font-semibold">{organizer.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -59,14 +60,14 @@ export function NavUser({ user }: NavUserProps) {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.imageUrl} alt={user.fullName} />
+                  <AvatarImage src={organizer.imageUrl} alt={organizer.name} />
                   <AvatarFallback className="rounded-lg">
                     {avatarFallback}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {user.fullName}
+                    {organizer.name}
                   </span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>

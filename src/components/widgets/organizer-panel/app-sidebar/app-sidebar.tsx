@@ -14,6 +14,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import { useOrganizerStore } from '@/pages/organizer-panel/providers/organizer-provider';
 import { useAuthUser } from '@/stores';
 import { Paths } from '@/utils/paths';
 
@@ -45,6 +46,7 @@ const data = {
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const user = useAuthUser(state => state.user);
+  const organizer = useOrganizerStore(state => state.organizer);
 
   return (
     <Sidebar variant="floating" collapsible="icon" {...props}>
@@ -54,7 +56,9 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
+      <SidebarFooter>
+        {user && organizer && <NavUser user={user} organizer={organizer} />}
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
