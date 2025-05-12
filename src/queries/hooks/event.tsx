@@ -13,6 +13,7 @@ import {
   getEventListPrefixKey,
 } from './query-key-helper';
 
+import { EVENT_INFINITE_SCROLL_PAGE_SIZE } from '@/const';
 import {
   CreateEventDTO,
   ProblemDetails,
@@ -20,8 +21,6 @@ import {
   UpdateEventDTO,
 } from '@/gen/data-contracts';
 import { queryClient, useSession } from '@/providers';
-
-const EVENT_LIST_PAGE_SIZE = 5;
 
 export const useCreateEventMutation = () => {
   const { token } = useSession();
@@ -75,7 +74,7 @@ export const useInfiniteEventsQuery = (
       const response = await eventQueryClient(token).getEventList({
         ...query,
         offset: pageParam,
-        limit: EVENT_LIST_PAGE_SIZE,
+        limit: EVENT_INFINITE_SCROLL_PAGE_SIZE,
       });
 
       return response.data;

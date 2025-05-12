@@ -25,6 +25,8 @@ const SearchInput: FC = () => {
         params.delete('search');
       }
 
+      params.delete('page');
+
       router.replace(`?${params.toString()}`);
     }
   }, [debouncedSearchQuery]);

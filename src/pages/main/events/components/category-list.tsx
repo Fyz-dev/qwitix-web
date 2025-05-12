@@ -25,6 +25,8 @@ const CategoryList: FC = () => {
       params.delete('category', category);
     }
 
+    params.delete('page');
+
     router.replace(`?${params.toString()}`);
   };
 
