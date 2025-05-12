@@ -9,6 +9,7 @@ import LoginButton from './components/login-button';
 
 import { Button } from '@/components/ui/button';
 import { useAuthUser } from '@/stores';
+import { Paths } from '@/utils/paths';
 
 const Header: FC = () => {
   const { user, logout } = useAuthUser(state => state);
@@ -38,7 +39,9 @@ const Header: FC = () => {
             size="lg"
             asChild
           >
-            <Link href="/login-organizer">Organize Events</Link>
+            <Link href={user ? Paths.Organizer.Events : Paths.Organizer.Login}>
+              Organize Events
+            </Link>
           </Button>
 
           {user ? (
