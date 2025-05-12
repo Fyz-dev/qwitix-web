@@ -2,6 +2,9 @@
 
 import { FC } from 'react';
 
+import TransactionList from '../components/transaction-list';
+
+import SuspenseWrapper from '@/components/features/suspense-wrapper';
 import { Separator } from '@/components/ui/separator';
 
 const MyAccountDashboardPage: FC = () => {
@@ -17,6 +20,10 @@ const MyAccountDashboardPage: FC = () => {
       </div>
 
       <Separator />
+
+      <SuspenseWrapper spinnerProps={{ size: 'medium' }}>
+        <TransactionList />
+      </SuspenseWrapper>
     </div>
   );
 };

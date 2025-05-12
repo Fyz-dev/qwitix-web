@@ -29,7 +29,7 @@ const MyAccountNavbar: FC<MyAccountNavbarProps> = ({ children }) => {
 
   return (
     <div className="mt-14 flex gap-8">
-      <Card className="w-full max-w-[300px]">
+      <Card className="max-h-min w-full max-w-[300px]">
         <CardHeader>
           <div className="flex flex-col items-center gap-4">
             <Avatar className="h-20 w-20 rounded-lg">

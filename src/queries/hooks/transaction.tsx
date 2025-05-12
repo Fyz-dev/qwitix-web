@@ -9,7 +9,7 @@ import { useSession } from '@/providers';
 const TRANSACTION_LIST_PAGE_SIZE = 5;
 
 export const useInfiniteTransactionsQuery = (
-  query: Omit<
+  query?: Omit<
     Parameters<
       ReturnType<typeof transactionQueryClient>['getTransactionList']
     >[0],
