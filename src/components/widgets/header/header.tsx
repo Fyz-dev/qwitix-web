@@ -4,19 +4,11 @@ import Link from 'next/link';
 import { FC } from 'react';
 
 import AuthDropdown from './components/auth-dropdown';
+import CategoryNav from './components/category-nav';
 import LoginButton from './components/login-button';
 
 import { Button } from '@/components/ui/button';
 import { useAuthUser } from '@/stores';
-
-const navItems = [
-  { name: 'MLB', href: '/mlb' },
-  { name: 'NHL', href: '/nhl' },
-  { name: 'NBA', href: '/nba' },
-  { name: 'NFL', href: '/nfl' },
-  { name: 'Concerts', href: '/concerts' },
-  { name: 'Other', href: '/other' },
-];
 
 const Header: FC = () => {
   const { user, logout } = useAuthUser(state => state);
@@ -36,18 +28,7 @@ const Header: FC = () => {
             <span className="text-5xl font-bold">QwiTix</span>
           </Link>
 
-          <nav className="hidden items-center md:flex">
-            {navItems.map(item => (
-              <Button
-                className="text-muted-foreground"
-                key={item.name}
-                variant="link"
-                asChild
-              >
-                <Link href={item.href}>{item.name}</Link>
-              </Button>
-            ))}
-          </nav>
+          <CategoryNav />
         </div>
 
         <div className="flex items-center">

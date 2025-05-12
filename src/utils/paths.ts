@@ -1,3 +1,5 @@
+type QueryParams = Record<string, string | number | boolean | undefined>;
+
 export const Paths = {
   BaseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   Organizer: {
@@ -9,10 +11,27 @@ export const Paths = {
     Settings: '/organizer/settings',
   },
   Main: {
-    Events: '/events',
+    Events: (params?: QueryParams) => buildPath('/events', params),
+    // Events: '/events',
     Event: (id: string) => `/events/${id}`,
     BuyTickets: (id: string) => `/events/${id}/buy-tickets`,
     AccountDashboard: '/my-account/dashboard',
     AccountSettings: '/my-account/settings',
   },
 };
+
+export function buildPath(path: string, queryParams?: QueryParams): string {
+  const params = new URLSearchParams();
+
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined && value !== null) {
+        params.set(key, String(value));
+      }
+    }
+  }
+
+  const queryString = params.toString();
+
+  return queryString ? `${path}?${queryString}` : path;
+}
