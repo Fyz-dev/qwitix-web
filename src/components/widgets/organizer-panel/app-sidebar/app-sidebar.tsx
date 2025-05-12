@@ -57,7 +57,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        {user && organizer && <NavUser user={user} organizer={organizer} />}
+        {user && organizer.id && <NavUser user={user} organizer={organizer} />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

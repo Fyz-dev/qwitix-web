@@ -33,6 +33,8 @@ const EventPagination: FC<EventPaginationProps> = ({ events }) => {
     return `${pathname}?${params.toString()}`;
   };
 
+  if (events.totalCount === 0) return null;
+
   return (
     <Pagination className="mt-auto">
       <PaginationContent>
@@ -60,7 +62,7 @@ const EventPagination: FC<EventPaginationProps> = ({ events }) => {
           <PaginationNext
             href={createPageLink(currentPage + 1)}
             className={
-              currentPage === totalPages ? 'pointer-events-none opacity-50' : ''
+              currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''
             }
           />
         </PaginationItem>
