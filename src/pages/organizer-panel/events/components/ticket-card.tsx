@@ -8,20 +8,21 @@ import { useTicketStore } from '../providers/ticket-store-provider';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ResponseTicketDTO } from '@/gen/data-contracts';
+import { ResponseTicketWithSoldDTO } from '@/gen/data-contracts';
 
 interface TicketCardProps {
-  ticket: ResponseTicketDTO;
+  ticket: ResponseTicketWithSoldDTO;
+  isReadOnly?: boolean;
 }
 
-const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
+const TicketCard: FC<TicketCardProps> = ({ ticket, isReadOnly }) => {
   const { setOpen, setTicket } = useTicketStore(state => state);
 
   return (
     <Card className="flex-row items-center justify-between px-3 py-2">
       <div className="flex flex-col gap-1">
         <span className="text-sm">
-          {ticket.name} {`(0/${ticket.quantity})`}
+          {ticket.name} {`(${ticket.sold}/${ticket.quantity})`}
         </span>
 
         <span className="text-muted-foreground text-xs">
@@ -36,18 +37,20 @@ const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
         </Badge>
       </div>
 
-      <Button
-        className="text-muted-foreground"
-        type="button"
-        variant="ghost"
-        size="icon"
-        onClick={() => {
-          setTicket(ticket);
-          setOpen('edit');
-        }}
-      >
-        <Edit />
-      </Button>
+      {!isReadOnly && (
+        <Button
+          className="text-muted-foreground"
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => {
+            setTicket(ticket);
+            setOpen('edit');
+          }}
+        >
+          <Edit />
+        </Button>
+      )}
     </Card>
   );
 };

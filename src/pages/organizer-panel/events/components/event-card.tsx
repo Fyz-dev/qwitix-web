@@ -55,7 +55,11 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   return (
-    <Card className="flex flex-row items-center px-6">
+    <Card className="relative flex flex-row items-center px-6">
+      <Link
+        className="absolute inset-0"
+        href={Paths.Organizer.ManageEvent(event.id)}
+      />
       <div className="bg-muted flex h-[70px] w-[110px] items-center justify-center rounded-xl">
         <Ticket />
       </div>
@@ -93,45 +97,47 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           </div>
         </div>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="ml-auto">
-            <EllipsisVertical />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuGroup>
-            <DropdownMenuItem
-              onClick={() => {
-                setEvent(event);
-                setDialogEventOpen('publish');
-              }}
-            >
-              <Rocket className="text-foreground" />
-              <span>Publish</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href={Paths.Organizer.ManageEvent(event.id)}>
-                <Edit className="text-foreground" />
-                <span>Manage Event</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={onDuplicate}>
-              <Copy className="text-foreground" />
-              <span>Duplicate</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                setEvent(event);
-                setDialogEventOpen('delete');
-              }}
-            >
-              <Trash2 className="text-foreground" />
-              <span>Delete</span>
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {event.status !== EventStatus.Scheduled && (
+        <DropdownMenu>
+          <DropdownMenuTrigger className="relative" asChild>
+            <Button variant="ghost" className="ml-auto">
+              <EllipsisVertical />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                onClick={() => {
+                  setEvent(event);
+                  setDialogEventOpen('publish');
+                }}
+              >
+                <Rocket className="text-foreground" />
+                <span>Publish</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={Paths.Organizer.ManageEvent(event.id)}>
+                  <Edit className="text-foreground" />
+                  <span>Manage Event</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onDuplicate}>
+                <Copy className="text-foreground" />
+                <span>Duplicate</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setEvent(event);
+                  setDialogEventOpen('delete');
+                }}
+              >
+                <Trash2 className="text-foreground" />
+                <span>Delete</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </Card>
   );
 };

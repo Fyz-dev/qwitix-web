@@ -8,10 +8,11 @@ import { EventStoreProvider } from '../providers/event-store-provider';
 import { TicketStoreProvider } from '../providers/ticket-store-provider';
 import { VenueStoreProvider } from '../providers/venue-store-provider';
 
+import EventInfo from './event-info';
 import ManageForm from './manage-form';
 
 import { Separator } from '@/components/ui/separator';
-import { ResponseEventDTO } from '@/gen/data-contracts';
+import { EventStatus, ResponseEventDTO } from '@/gen/data-contracts';
 
 interface ManageEventPageProps {
   event: ResponseEventDTO;
@@ -37,7 +38,11 @@ const ManageEventPage: FC<ManageEventPageProps> = ({ event }) => {
             <Separator className="shadow-sm" />
 
             <div className="-mx-1 px-1.5 lg:max-w-xl">
-              <ManageForm event={event} />
+              {event.status === EventStatus.Scheduled ? (
+                <EventInfo event={event} />
+              ) : (
+                <ManageForm event={event} />
+              )}
             </div>
           </div>
 
