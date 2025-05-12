@@ -14,7 +14,7 @@ const LoginOrganizer: FC = async () => {
   } = await accountQueryClient(
     await getAccessTokenFromServer(),
   ).getGoogleLoginUrl({
-    returnUrl: `${Paths.BaseUrl}${Paths.Organizer.Home}`,
+    returnUrl: `${Paths.BaseUrl}${Paths.Organizer.Events}`,
   });
 
   return (

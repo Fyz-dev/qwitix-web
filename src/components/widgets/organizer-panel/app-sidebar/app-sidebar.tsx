@@ -1,6 +1,6 @@
 'use client';
 
-import { CalendarClock, ChartSpline, Home, Settings2 } from 'lucide-react';
+import { CalendarClock, Settings2 } from 'lucide-react';
 import { ComponentProps } from 'react';
 
 import { HomeButton } from './home-button';
@@ -20,22 +20,22 @@ import { Paths } from '@/utils/paths';
 
 const data = {
   navMain: [
-    {
-      title: 'Home',
-      url: Paths.Organizer.Home,
-      icon: Home,
-      isActive: true,
-    },
+    // {
+    //   title: 'Home',
+    //   url: Paths.Organizer.Home,
+    //   icon: Home,
+    //   isActive: true,
+    // },
     {
       title: 'Events',
       url: Paths.Organizer.Events,
       icon: CalendarClock,
     },
-    {
-      title: 'Analytics',
-      url: Paths.Organizer.Analytics,
-      icon: ChartSpline,
-    },
+    // {
+    //   title: 'Analytics',
+    //   url: Paths.Organizer.Analytics,
+    //   icon: ChartSpline,
+    // },
     {
       title: 'Settings',
       url: Paths.Organizer.Settings,
