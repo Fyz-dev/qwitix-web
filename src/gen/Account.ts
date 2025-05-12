@@ -23,6 +23,21 @@ export class Account<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags Account
+   * @name IsAuthorized
+   * @request GET:/api/account/authorize
+   * @secure
+   */
+  isAuthorized = (params: RequestParams = {}) =>
+    this.request<void, ProblemDetails>({
+      path: `/api/account/authorize`,
+      method: 'GET',
+      secure: true,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Account
    * @name GetAccount
    * @request GET:/api/account
    * @secure
