@@ -10,7 +10,8 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ResponseEventDTO } from '@/gen/data-contracts';
+import EventStartedAlert from '@/components/widgets/event-started-alert';
+import { EventStatus, ResponseEventDTO } from '@/gen/data-contracts';
 import { formatFullDateTime } from '@/utils/formatDate';
 import { Paths } from '@/utils/paths';
 
@@ -27,7 +28,12 @@ const EventPage: FC<EventPageProps> = ({ event }) => {
     : undefined;
 
   return (
-    <div className="mt-14 mb-14 flex flex-col gap-9">
+    <div className="my-14 flex flex-col gap-9">
+      <EventStartedAlert
+        description={event.tickets && event.tickets.length > 0}
+        event={event}
+      />
+
       <div className="bg-muted flex h-[348px] w-full items-center justify-center rounded-xl">
         <Ticket className="size-12" />
       </div>
@@ -67,11 +73,17 @@ const EventPage: FC<EventPageProps> = ({ event }) => {
                     USD {Math.min(...event.tickets.map(t => t.price))}
                   </span>
                 </div>
-                <Button asChild className="w-full">
-                  <Link href={Paths.Main.BuyTickets(event.id)}>
-                    Buy tickets
-                  </Link>
-                </Button>
+                {!(
+                  event.status === EventStatus.Scheduled &&
+                  event.startDate &&
+                  new Date(event.startDate) < new Date()
+                ) && (
+                  <Button asChild className="w-full">
+                    <Link href={Paths.Main.BuyTickets(event.id)}>
+                      Buy tickets
+                    </Link>
+                  </Button>
+                )}
               </CardContent>
             </Card>
           )}

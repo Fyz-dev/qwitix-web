@@ -12,9 +12,10 @@ import { cn } from '@/lib/utils';
 
 interface TicketCardProps {
   ticket: ResponseTicketWithSoldDTO;
+  isReadonly?: boolean;
 }
 
-const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
+const TicketCard: FC<TicketCardProps> = ({ ticket, isReadonly }) => {
   const quantity = useCartStore(state => {
     const item = state.cart.find(i => i.ticket.id === ticket.id);
     return item?.quantity ?? 0;
@@ -52,42 +53,41 @@ const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
         >
           USD {ticket.price}
         </span>
-        {ticket.sold === ticket.quantity ? (
-          <>
+        {!isReadonly &&
+          (ticket.sold === ticket.quantity ? (
             <span className="text-destructive text-2xl font-bold">
               Sold out
             </span>
-          </>
-        ) : (
-          <div className="flex items-center justify-center gap-6">
-            <Button
-              onClick={() => remove(ticket.id)}
-              variant="outline"
-              size="icon"
-              className="text-primary border-primary hover:text-primary hover:border-primary"
-            >
-              <Minus />
-            </Button>
+          ) : (
+            <div className="flex items-center justify-center gap-6">
+              <Button
+                onClick={() => remove(ticket.id)}
+                variant="outline"
+                size="icon"
+                className="text-primary border-primary hover:text-primary hover:border-primary"
+              >
+                <Minus />
+              </Button>
 
-            <span
-              className={cn(
-                'text-2xl font-bold',
-                quantity > 0 && 'text-primary',
-              )}
-            >
-              {quantity}
-            </span>
+              <span
+                className={cn(
+                  'text-2xl font-bold',
+                  quantity > 0 && 'text-primary',
+                )}
+              >
+                {quantity}
+              </span>
 
-            <Button
-              onClick={() => add(ticket)}
-              variant="outline"
-              size="icon"
-              className="text-primary border-primary hover:text-primary hover:border-primary"
-            >
-              <Plus />
-            </Button>
-          </div>
-        )}
+              <Button
+                onClick={() => add(ticket)}
+                variant="outline"
+                size="icon"
+                className="text-primary border-primary hover:text-primary hover:border-primary"
+              >
+                <Plus />
+              </Button>
+            </div>
+          ))}
       </CardContent>
     </Card>
   );

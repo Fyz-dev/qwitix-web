@@ -7,7 +7,12 @@ import TicketCard from './components/ticket-card';
 import { CartStoreProvider } from './providers/cart-store-provider';
 
 import { Separator } from '@/components/ui/separator';
-import { ResponseEventDTO, ResponseTicketDTO } from '@/gen/data-contracts';
+import EventStartedAlert from '@/components/widgets/event-started-alert';
+import {
+  EventStatus,
+  ResponseEventDTO,
+  ResponseTicketDTO,
+} from '@/gen/data-contracts';
 
 interface BuyTicketsPageProps {
   event: ResponseEventDTO;
@@ -17,12 +22,20 @@ interface BuyTicketsPageProps {
 const BuyTicketsPage: FC<BuyTicketsPageProps> = ({ event, tickets }) => {
   return (
     <CartStoreProvider>
-      <div className="h-full">
+      <div className="my-14 flex h-full flex-col gap-14">
+        <EventStartedAlert event={event} />
         <BuyTicketHeader event={event} />
-        <Separator className="my-14" />
+        <Separator />
         <section className="grid grid-cols-4 gap-6">
           {tickets.map(ticket => (
-            <TicketCard key={ticket.id} ticket={ticket} />
+            <TicketCard
+              isReadonly={
+                event.status !== EventStatus.Scheduled ||
+                (event.startDate && new Date(event.startDate) < new Date())
+              }
+              key={ticket.id}
+              ticket={ticket}
+            />
           ))}
         </section>
         <CartDialogs />

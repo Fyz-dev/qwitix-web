@@ -20,7 +20,7 @@ const BuyTicketHeader: FC<BuyTicketHeaderProps> = ({ event }) => {
     : undefined;
 
   return (
-    <section className="mt-14 flex gap-14">
+    <section className="flex gap-14">
       <div>
         <Button asChild size="icon" variant="outline">
           <Link href={Paths.Main.Event(event.id)}>
