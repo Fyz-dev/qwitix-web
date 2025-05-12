@@ -72,6 +72,7 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
       limit?: number;
       status?: EventStatus;
       searchQuery?: string;
+      categories?: string[];
     },
     params: RequestParams = {},
   ) =>

@@ -1,3 +1,5 @@
+import { stringify } from 'qs';
+
 import { Event } from '@/gen/Event';
 
 export const eventQueryClient = (accessToken?: string) => {
@@ -6,5 +8,6 @@ export const eventQueryClient = (accessToken?: string) => {
     headers: {
       Authorization: accessToken ? `Bearer ${accessToken}` : false,
     },
+    paramsSerializer: params => stringify(params),
   });
 };

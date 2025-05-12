@@ -19,6 +19,7 @@ async function getEvents(page: number, categories: string[], search?: string) {
     offset: (page - 1) * EVENT_PAGINATION_PAGE_SIZE,
     limit: EVENT_PAGINATION_PAGE_SIZE,
     searchQuery: search,
+    categories: categories,
   });
 
   return events;
