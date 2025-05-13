@@ -18,6 +18,14 @@ export const eventSchema = z.object({
     .nonempty('Category cannot be empty.')
     .max(100, 'Category cannot exceed 100 characters.'),
 
+  imgFile: z
+    .array(z.custom<File>())
+    .refine(files => files.every(file => file.size <= 5 * 1024 * 1024), {
+      message: 'File size must be less than 5MB',
+      path: ['files'],
+    })
+    .optional(),
+
   venue: venueSchema,
 });
 
