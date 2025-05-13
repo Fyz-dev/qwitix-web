@@ -19,6 +19,8 @@ export interface CreateEventDTO {
   organizerId: string;
   title: string;
   description?: string;
+  /** @format binary */
+  imgFile?: File;
   category: string;
   venue: CreateVenueDTO;
 }
@@ -89,6 +91,7 @@ export interface ResponseEventDTO {
   organizerId: string;
   title: string;
   description?: string;
+  imgUrl?: string;
   category: string;
   status: EventStatus;
   venue: ResponseVenueDTO;
@@ -207,6 +210,8 @@ export enum TransactionStatus {
 export interface UpdateEventDTO {
   title?: string;
   description?: string;
+  /** @format binary */
+  imgFile?: File;
   category?: string;
   venue?: UpdateVenueDTO;
 }

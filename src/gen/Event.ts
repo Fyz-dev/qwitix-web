@@ -30,12 +30,13 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @secure
    */
   createEvent = (data: CreateEventDTO, params: RequestParams = {}) =>
-    this.request<void, ProblemDetails | void>({
+    this.request<CreateEventDTO, ProblemDetails | void>({
       path: `/api/event`,
       method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: 'json',
       ...params,
     });
   /**
@@ -109,12 +110,13 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @secure
    */
   updateEvent = (id: string, data: UpdateEventDTO, params: RequestParams = {}) =>
-    this.request<void, ProblemDetails | void>({
+    this.request<UpdateEventDTO, ProblemDetails | void>({
       path: `/api/event/${id}`,
       method: 'PATCH',
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: 'json',
       ...params,
     });
   /**
