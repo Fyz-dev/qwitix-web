@@ -10,23 +10,31 @@ import { getAccessTokenFromServer } from '@/utils/auth';
 interface EventsProps {
   searchParams: TSearchParams;
 }
+async function getEvents(
+  page: number,
+  categories: string[],
+  ended?: string,
+  search?: string,
+) {
+  const statuses = [
+    EventStatus.Scheduled,
+    ...(ended === 'true' ? [EventStatus.Ended, EventStatus.Live] : []),
+  ];
 
-async function getEvents(page: number, categories: string[], search?: string) {
   const events = await eventQueryClient(
     await getAccessTokenFromServer(),
   ).getEventList({
-    status: EventStatus.Scheduled,
+    statuses,
     offset: (page - 1) * EVENT_PAGINATION_PAGE_SIZE,
     limit: EVENT_PAGINATION_PAGE_SIZE,
     searchQuery: search,
-    categories: categories,
+    categories,
   });
 
   return events;
 }
-
 const Events: FC<EventsProps> = async ({ searchParams }) => {
-  const { page, category, search } = await searchParams;
+  const { page, category, search, ended } = await searchParams;
 
   const normalizedCategories = Array.isArray(category)
     ? category
@@ -34,12 +42,13 @@ const Events: FC<EventsProps> = async ({ searchParams }) => {
       ? [category]
       : [];
   const normalizedSearch = Array.isArray(search) ? search.toString() : search;
-
   const normalizedPage = Number(page || 1);
+  const normalizedEnded = Array.isArray(ended) ? ended[0] : ended;
 
   const events = await getEvents(
     normalizedPage,
     normalizedCategories,
+    normalizedEnded,
     normalizedSearch,
   );
 

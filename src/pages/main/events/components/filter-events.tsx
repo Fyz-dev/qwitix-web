@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import CategoryList from './category-list';
+import LiveEndedEvent from './live-ended-event';
 import SearchInput from './search-input';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -16,6 +17,13 @@ const FilterEvents: FC = () => {
         <div className="flex flex-col gap-2">
           <span className="font-bold">Search</span>
           <SearchInput />
+        </div>
+
+        <Separator />
+
+        <div className="flex flex-col gap-2">
+          <span className="font-bold">Categories</span>
+          <LiveEndedEvent />
         </div>
 
         <Separator />

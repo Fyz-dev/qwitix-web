@@ -71,7 +71,7 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
       offset?: number;
       /** @format int32 */
       limit?: number;
-      status?: EventStatus;
+      statuses?: EventStatus[];
       searchQuery?: string;
       categories?: string[];
     },

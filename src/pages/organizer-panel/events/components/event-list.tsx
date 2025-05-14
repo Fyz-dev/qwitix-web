@@ -28,8 +28,9 @@ const EventList: FC<EventListProps> = ({
 }) => {
   const query = useInfiniteEventsQuery({
     organizerId: organizer.id,
-    status:
+    statuses: [
       selectedStatus === 'All' ? undefined : (selectedStatus as EventStatus),
+    ],
     searchQuery: searchQuery,
   });
 
