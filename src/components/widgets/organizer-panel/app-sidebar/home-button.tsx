@@ -17,10 +17,10 @@ export function HomeButton() {
         <SidebarMenuButton
           asChild
           size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground gap-0"
         >
           <Link href={Paths.Organizer.Events}>
-            <div className="text-sidebar-primary-foreground flex aspect-square size-10 items-center justify-center rounded-lg">
+            <div className="text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
               <Image
                 src="/assets/logo.png"
                 alt="Qwitix"

@@ -28,6 +28,8 @@ const selectOptions = new Map<EventStatusOptions, string>([
   ['All', 'All states'],
   ['Draft', 'Draft'],
   ['Scheduled', 'Scheduled'],
+  ['Live', 'Live'],
+  ['Ended', 'Ended'],
 ]);
 
 const EventsPage: FC<EventsPageProps> = () => {

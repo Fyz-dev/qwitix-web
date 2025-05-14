@@ -16,6 +16,7 @@ import { FC } from 'react';
 import { toast } from 'sonner';
 
 import { useEventStore } from '../providers/event-store-provider';
+import { getEventStatus } from '../utils';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -55,6 +56,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
     });
   };
 
+  const { label, badgeClass } = getEventStatus(event);
+
   return (
     <Card className="relative flex flex-row items-center px-6">
       <Link
@@ -91,15 +94,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
       <div className="flex flex-col justify-center gap-2">
         <div className="item-center flex flex-row gap-3">
           <span className="text-xl font-semibold">{event.title}</span>
-          <Badge
-            variant="secondary"
-            className={cn(
-              'rounded-full',
-              event.status === EventStatus.Scheduled &&
-                'bg-green-100 text-green-800',
-            )}
-          >
-            {event.status}
+          <Badge variant="secondary" className={cn('rounded-full', badgeClass)}>
+            {label}
           </Badge>
         </div>
         <div className="text-muted-foreground flex flex-row items-center gap-4">
