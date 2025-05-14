@@ -13,7 +13,10 @@ import { useVenueStore } from '../providers/venue-store-provider';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { useCreateEventMutation } from '@/queries/hooks/event';
+import {
+  useCreateEventMutation,
+  useUploadImageEventMutation,
+} from '@/queries/hooks/event';
 import { Paths } from '@/utils/paths';
 import { eventSchema, EventSchemaType } from '@/validations/event';
 
@@ -24,6 +27,7 @@ const CreateForm: FC = () => {
   const organizer = useOrganizerStore(state => state.organizer);
 
   const createEventMutation = useCreateEventMutation();
+  const uploadEventImageMutation = useUploadImageEventMutation();
 
   const form = useForm<EventSchemaType>({
     resolver: zodResolver(eventSchema),
@@ -32,23 +36,39 @@ const CreateForm: FC = () => {
       description: '',
       category: '',
       venue: undefined,
+      imgFile: [],
     },
   });
 
   const onSubmit = (data: EventSchemaType) => {
-    const promise = createEventMutation.mutateAsync({
+    const createEventPromise = createEventMutation.mutateAsync({
       ...data,
       organizerId: organizer.id,
     });
 
-    toast.promise(promise, {
+    toast.promise(createEventPromise, {
       loading: 'Creating event...',
       success: 'Event successfully created!',
       error: 'Failed to create event.',
     });
 
-    promise.then(() => {
-      router.push(Paths.Organizer.Events);
+    createEventPromise.then(({ data: eventData }) => {
+      if (!(data.imgFile && data.imgFile.length > 0)) return;
+
+      const uploadImagePromise = uploadEventImageMutation.mutateAsync({
+        id: eventData.id,
+        Image: data.imgFile[0],
+      });
+
+      toast.promise(uploadImagePromise, {
+        loading: 'Upload image...',
+        success: 'Image successfully upload!',
+        error: 'Failed to upload image.',
+      });
+
+      uploadImagePromise.then(() => {
+        router.push(Paths.Organizer.Events);
+      });
     });
   };
 

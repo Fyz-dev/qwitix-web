@@ -9,6 +9,7 @@
  * ---------------------------------------------------------------
  */
 
+import { ProblemDetails } from './data-contracts';
 import { HttpClient, RequestParams } from './http-client';
 
 export class Media<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -21,10 +22,11 @@ export class Media<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @secure
    */
   mediaDetail = (blobName: string, params: RequestParams = {}) =>
-    this.request<void, any>({
+    this.request<File, ProblemDetails>({
       path: `/api/media/${blobName}`,
       method: 'GET',
       secure: true,
+      format: 'json',
       ...params,
     });
 }

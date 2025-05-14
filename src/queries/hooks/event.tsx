@@ -18,6 +18,7 @@ import {
   CreateEventDTO,
   ProblemDetails,
   PublishEventDTO,
+  ResponseEventDTO,
   UpdateEventDTO,
 } from '@/gen/data-contracts';
 import { queryClient, useSession } from '@/providers';
@@ -25,19 +26,21 @@ import { queryClient, useSession } from '@/providers';
 export const useCreateEventMutation = () => {
   const { token } = useSession();
 
-  return useMutation<AxiosResponse<void, void>, ProblemDetails, CreateEventDTO>(
-    {
-      mutationFn: async data => {
-        return await eventQueryClient(token).createEvent(data);
-      },
-      onSuccess: response => {
-        if (response.status === 204)
-          queryClient.invalidateQueries({
-            queryKey: getEventListPrefixKey(),
-          });
-      },
+  return useMutation<
+    AxiosResponse<ResponseEventDTO, void>,
+    ProblemDetails,
+    CreateEventDTO
+  >({
+    mutationFn: async data => {
+      return await eventQueryClient(token).createEvent(data);
     },
-  );
+    onSuccess: response => {
+      if (response.status === 204)
+        queryClient.invalidateQueries({
+          queryKey: getEventListPrefixKey(),
+        });
+    },
+  });
 };
 
 export const usePublishEventMutation = (id: string) => {
@@ -130,6 +133,44 @@ export const useEventCategoryListQuery = () => {
     queryKey: getEventCategoryListKey(),
     queryFn: async () => {
       return await eventQueryClient(token).getEventCategories();
+    },
+  });
+};
+
+export const useUploadImageEventMutation = () => {
+  const { token } = useSession();
+
+  return useMutation<
+    AxiosResponse<void, void>,
+    ProblemDetails,
+    { id: string } & Parameters<
+      ReturnType<typeof eventQueryClient>['uploadEventImage']
+    >[1]
+  >({
+    mutationFn: async data => {
+      return await eventQueryClient(token).uploadEventImage(data.id, data);
+    },
+    onSuccess: response => {
+      if (response.status === 204)
+        queryClient.invalidateQueries({
+          queryKey: getEventListPrefixKey(),
+        });
+    },
+  });
+};
+
+export const useDeleteImageEventMutation = (id: string) => {
+  const { token } = useSession();
+
+  return useMutation<AxiosResponse<void, void>, ProblemDetails>({
+    mutationFn: async () => {
+      return await eventQueryClient(token).deleteEventImage(id);
+    },
+    onSuccess: response => {
+      if (response.status === 204)
+        queryClient.invalidateQueries({
+          queryKey: getEventListPrefixKey(),
+        });
     },
   });
 };

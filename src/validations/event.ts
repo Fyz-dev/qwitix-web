@@ -20,6 +20,7 @@ export const eventSchema = z.object({
 
   imgFile: z
     .array(z.custom<File>())
+    .max(1, 'Please select to 1 file')
     .refine(files => files.every(file => file.size <= 5 * 1024 * 1024), {
       message: 'File size must be less than 5MB',
       path: ['files'],

@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -23,18 +23,25 @@ import {
 } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { ResponseEventDTO } from '@/gen/data-contracts';
-import { useUpdateEventMutation } from '@/queries/hooks/event';
+import {
+  useDeleteEventMutation,
+  useUpdateEventMutation,
+  useUploadImageEventMutation,
+} from '@/queries/hooks/event';
 import { eventSchema, EventSchemaType } from '@/validations/event';
-
 interface ManageFormProps {
   event: ResponseEventDTO;
 }
 
 const ManageForm: FC<ManageFormProps> = ({ event }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const venue = useVenueStore(state => state.venue);
   const setDrawerTicketOpen = useTicketStore(state => state.setOpen);
 
-  const createEventMutation = useUpdateEventMutation(event.id);
+  const updateEventMutation = useUpdateEventMutation(event.id);
+  const uploadImageEventMutation = useUploadImageEventMutation();
+  const deleteImageEventMutation = useDeleteEventMutation(event.id);
 
   const form = useForm<EventSchemaType>({
     resolver: zodResolver(eventSchema),
@@ -43,19 +50,53 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
       description: event.description || '',
       category: event.category,
       venue: event.venue,
+      imgFile: [],
     },
   });
 
   const onSubmit = (data: EventSchemaType) => {
-    const promise = createEventMutation.mutateAsync({
+    setIsLoading(true);
+
+    const updateEventPromise = updateEventMutation.mutateAsync({
       ...data,
     });
 
-    toast.promise(promise, {
+    toast.promise(updateEventPromise, {
       loading: 'Saving event...',
       success: 'Event successfully saved!',
       error: 'Failed to save event.',
     });
+
+    updateEventPromise
+      .then(async () => {
+        const hadImage = !!event.imgUrl;
+
+        if (data.imgFile && data.imgFile.length > 0) {
+          const uploadImagePromise = uploadImageEventMutation.mutateAsync({
+            id: event.id,
+            Image: data.imgFile[0],
+          });
+
+          toast.promise(uploadImagePromise, {
+            loading: 'Uploading image...',
+            success: 'Image successfully uploaded!',
+            error: 'Failed to upload image.',
+          });
+
+          await uploadImagePromise;
+        } else if (hadImage && !(data.imgFile && data.imgFile.length > 0)) {
+          const deleteImagePromise = deleteImageEventMutation.mutateAsync();
+
+          toast.promise(deleteImagePromise, {
+            loading: 'Deleting image...',
+            success: 'Image successfully deleted!',
+            error: 'Failed to delete image.',
+          });
+
+          await deleteImagePromise;
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -94,8 +135,8 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
           )}
         />
 
-        <Button type="submit" disabled={createEventMutation.isPending}>
-          {createEventMutation.isPending ? (
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? (
             <>
               <Spinner size="small" className="text-current" />
               Saving...
