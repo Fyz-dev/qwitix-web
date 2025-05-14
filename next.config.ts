@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       {
         source: '/',
         destination: '/events',
-        permanent: true, // или false, если хотите сделать временный редирект
+        permanent: true,
       },
     ];
   },
