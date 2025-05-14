@@ -11,6 +11,8 @@ import TicketList from '../components/ticket-list';
 import { useTicketStore } from '../providers/ticket-store-provider';
 import { useVenueStore } from '../providers/venue-store-provider';
 
+import BannerCard from './banner-card';
+
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -23,11 +25,7 @@ import {
 } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { ResponseEventDTO } from '@/gen/data-contracts';
-import {
-  useDeleteEventMutation,
-  useUpdateEventMutation,
-  useUploadImageEventMutation,
-} from '@/queries/hooks/event';
+import { useUpdateEventMutation } from '@/queries/hooks/event';
 import { eventSchema, EventSchemaType } from '@/validations/event';
 interface ManageFormProps {
   event: ResponseEventDTO;
@@ -40,8 +38,6 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
   const setDrawerTicketOpen = useTicketStore(state => state.setOpen);
 
   const updateEventMutation = useUpdateEventMutation(event.id);
-  const uploadImageEventMutation = useUploadImageEventMutation();
-  const deleteImageEventMutation = useDeleteEventMutation(event.id);
 
   const form = useForm<EventSchemaType>({
     resolver: zodResolver(eventSchema),
@@ -67,36 +63,7 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
       error: 'Failed to save event.',
     });
 
-    updateEventPromise
-      .then(async () => {
-        const hadImage = !!event.imgUrl;
-
-        if (data.imgFile && data.imgFile.length > 0) {
-          const uploadImagePromise = uploadImageEventMutation.mutateAsync({
-            id: event.id,
-            Image: data.imgFile[0],
-          });
-
-          toast.promise(uploadImagePromise, {
-            loading: 'Uploading image...',
-            success: 'Image successfully uploaded!',
-            error: 'Failed to upload image.',
-          });
-
-          await uploadImagePromise;
-        } else if (hadImage && !(data.imgFile && data.imgFile.length > 0)) {
-          const deleteImagePromise = deleteImageEventMutation.mutateAsync();
-
-          toast.promise(deleteImagePromise, {
-            loading: 'Deleting image...',
-            success: 'Image successfully deleted!',
-            error: 'Failed to delete image.',
-          });
-
-          await deleteImagePromise;
-        }
-      })
-      .finally(() => setIsLoading(false));
+    updateEventPromise.finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -106,7 +73,23 @@ const ManageForm: FC<ManageFormProps> = ({ event }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <EventMutationFormField form={form} />
+        <EventMutationFormField form={form}>
+          <FormField
+            name="imgFile"
+            render={() => (
+              <FormItem>
+                <FormLabel>Banner</FormLabel>
+                <FormControl>
+                  <div className="bg-muted relative flex h-[250px] w-full items-center justify-center overflow-hidden rounded-xl">
+                    <BannerCard event={event} />
+                  </div>
+                </FormControl>
+                <FormDescription>Upload 1 images up to 5MB.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </EventMutationFormField>
         <FormField
           name="tickets"
           render={() => (

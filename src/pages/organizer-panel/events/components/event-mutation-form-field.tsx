@@ -1,22 +1,12 @@
 'use client';
 
 import { CloudUpload, Edit, Plus, X } from 'lucide-react';
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 import { useVenueStore } from '../providers/venue-store-provider';
 
 import { Button } from '@/components/ui/button';
-import {
-  FileUpload,
-  FileUploadDropzone,
-  FileUploadItem,
-  FileUploadItemDelete,
-  FileUploadItemMetadata,
-  FileUploadItemPreview,
-  FileUploadList,
-  FileUploadTrigger,
-} from '@/components/ui/file-upload';
 import {
   FormControl,
   FormDescription,
@@ -29,11 +19,14 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { EventSchemaType } from '@/validations/event';
 
-interface EventMutationFormFieldProps {
+interface EventMutationFormFieldProps extends PropsWithChildren {
   form: UseFormReturn<EventSchemaType>;
 }
 
-const EventMutationFormField: FC<EventMutationFormFieldProps> = ({ form }) => {
+const EventMutationFormField: FC<EventMutationFormFieldProps> = ({
+  form,
+  children,
+}) => {
   const { setOpen: setDrawerVenueOpen, venue } = useVenueStore(state => state);
 
   return (
@@ -80,56 +73,7 @@ const EventMutationFormField: FC<EventMutationFormFieldProps> = ({ form }) => {
         )}
       />
 
-      <FormField
-        control={form.control}
-        name="imgFile"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Banner</FormLabel>
-            <FormControl>
-              <FileUpload
-                value={field.value}
-                onValueChange={field.onChange}
-                accept="image/*"
-                maxFiles={1}
-                maxSize={5 * 1024 * 1024}
-                onFileReject={(_, message) => {
-                  form.setError('imgFile', {
-                    message,
-                  });
-                }}
-              >
-                <FileUploadDropzone className="flex-row flex-wrap border-dotted text-center">
-                  <CloudUpload className="size-4" />
-                  Drag and drop or
-                  <FileUploadTrigger asChild>
-                    <Button variant="link" size="sm" className="p-0">
-                      choose files
-                    </Button>
-                  </FileUploadTrigger>
-                  to upload
-                </FileUploadDropzone>
-                <FileUploadList>
-                  {field.value?.map((file, index) => (
-                    <FileUploadItem key={index} value={file}>
-                      <FileUploadItemPreview />
-                      <FileUploadItemMetadata />
-                      <FileUploadItemDelete asChild>
-                        <Button variant="ghost" size="icon" className="size-7">
-                          <X />
-                          <span className="sr-only">Delete</span>
-                        </Button>
-                      </FileUploadItemDelete>
-                    </FileUploadItem>
-                  ))}
-                </FileUploadList>
-              </FileUpload>
-            </FormControl>
-            <FormDescription>Upload 1 images up to 5MB.</FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      {children}
 
       <FormField
         control={form.control}

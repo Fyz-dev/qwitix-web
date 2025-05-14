@@ -2,6 +2,19 @@ import z from 'zod';
 
 import { venueSchema } from './venue';
 
+export const uploadImageSchema = z
+  .array(z.custom<File>())
+  .max(1, 'Please select to 1 file')
+  .refine(files => files.every(file => file.size <= 5 * 1024 * 1024), {
+    message: 'File size must be less than 5MB',
+    path: ['files'],
+  })
+  .optional();
+
+export const uploadEventImageSchema = z.object({
+  imgFile: uploadImageSchema,
+});
+
 export const eventSchema = z.object({
   title: z
     .string()
@@ -18,14 +31,7 @@ export const eventSchema = z.object({
     .nonempty('Category cannot be empty.')
     .max(100, 'Category cannot exceed 100 characters.'),
 
-  imgFile: z
-    .array(z.custom<File>())
-    .max(1, 'Please select to 1 file')
-    .refine(files => files.every(file => file.size <= 5 * 1024 * 1024), {
-      message: 'File size must be less than 5MB',
-      path: ['files'],
-    })
-    .optional(),
+  imgFile: uploadImageSchema,
 
   venue: venueSchema,
 });
@@ -58,3 +64,4 @@ export const eventSchemaPublish = z
 
 export type EventSchemaType = z.infer<typeof eventSchema>;
 export type EventSchemaPublishType = z.infer<typeof eventSchemaPublish>;
+export type EventSchemaUploadImageType = z.infer<typeof uploadEventImageSchema>;
