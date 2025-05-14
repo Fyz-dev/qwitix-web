@@ -52,6 +52,8 @@ export enum EventStatus {
   Scheduled = 'Scheduled',
   Postponed = 'Postponed',
   Canceled = 'Canceled',
+  Live = 'Live',
+  Ended = 'Ended',
 }
 
 export interface ProblemDetails {
