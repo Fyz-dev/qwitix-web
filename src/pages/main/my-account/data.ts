@@ -12,7 +12,7 @@ export const dataNavItem: NavItem[] = [
   },
   {
     title: 'Settings',
-    url: Paths.Main.AccountSettings,
+    url: Paths.Main.AccountSettingsProfile,
     icon: Settings,
   },
 ];

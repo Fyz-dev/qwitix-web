@@ -38,7 +38,7 @@ const data = {
     // },
     {
       title: 'Settings',
-      url: Paths.Organizer.Settings,
+      url: Paths.Organizer.SettingsProfile,
       icon: Settings2,
     },
   ],

@@ -20,7 +20,7 @@ import { useUpdateAccountMutation } from '@/queries/hooks/account';
 import { useAuthUser } from '@/stores';
 import { userSchema, UserSchemaType } from '@/validations/user';
 
-const SettingForm: FC = () => {
+const ProfileForm: FC = () => {
   const { user } = useAuthUser(state => state);
 
   const updateMutation = useUpdateAccountMutation();
@@ -71,4 +71,4 @@ const SettingForm: FC = () => {
   );
 };
 
-export default SettingForm;
+export default ProfileForm;

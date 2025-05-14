@@ -1,18 +1,14 @@
 import { FC } from 'react';
 
+import ProfileForm from '../components/profile-form';
 import Layout from '../layout';
-
-import ProfileForm from './profile-form';
 
 import ContentSection from '@/components/widgets/content-section';
 
 const ProfilePage: FC = () => {
   return (
     <Layout>
-      <ContentSection
-        title="Profile"
-        desc="This is how others will see you on the site."
-      >
+      <ContentSection title="Profile" desc="Update your account settings.">
         <ProfileForm />
       </ContentSection>
     </Layout>

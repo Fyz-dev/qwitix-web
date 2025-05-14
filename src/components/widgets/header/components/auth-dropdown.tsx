@@ -64,7 +64,7 @@ const AuthDropdown: FC<AuthDropdownProps> = ({ user, logout }) => {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={Paths.Main.AccountSettings}>
+            <Link href={Paths.Main.AccountSettingsProfile}>
               <Settings />
               Settings
             </Link>

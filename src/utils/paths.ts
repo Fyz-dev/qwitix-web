@@ -11,7 +11,8 @@ export const Paths = {
     CreateEvent: '/organizer/events/create',
     ManageEvent: (id: string) => `/organizer/events/manage-event/${id}`,
     Analytics: '/organizer/analytics',
-    Settings: '/organizer/settings',
+    SettingsProfile: '/organizer/settings/profile',
+    SettingsAppearance: '/organizer/settings/appearance',
   },
   Main: {
     Events: (params?: QueryParams) => buildPath('/events', params),
@@ -19,7 +20,8 @@ export const Paths = {
     Event: (id: string) => `/events/${id}`,
     BuyTickets: (id: string) => `/events/${id}/buy-tickets`,
     AccountDashboard: '/my-account/dashboard',
-    AccountSettings: '/my-account/settings',
+    AccountSettingsProfile: '/my-account/settings/profile',
+    AccountSettingsAppearance: '/my-account/settings/appearance',
   },
 };
 

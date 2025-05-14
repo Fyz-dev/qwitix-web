@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import SettingsPage from '@/pages/organizer-panel/settings';
+import ProfilePage from '@/pages/organizer-panel/settings/profile';
 
 const OrganizerSettingPage: FC = () => {
-  return <SettingsPage />;
+  return <ProfilePage />;
 };
 
 export default OrganizerSettingPage;

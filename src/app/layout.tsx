@@ -7,6 +7,7 @@ import { ReactNode } from 'react';
 import { Toaster } from '@/components/ui/sonner';
 import QueryClientProvider from '@/providers/query-client-provider';
 import { SessionProvider } from '@/providers/session-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
 import { getAccessTokenFromServer } from '@/utils/auth';
 
 const font = Open_Sans({
@@ -30,7 +31,16 @@ export default async function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body className={`${font.variable} antialiased`}>
         <SessionProvider token={token}>
-          <QueryClientProvider>{children}</QueryClientProvider>
+          <QueryClientProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </QueryClientProvider>
         </SessionProvider>
         <Toaster />
       </body>
