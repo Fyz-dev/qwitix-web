@@ -82,6 +82,11 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         ) : (
           <Ticket />
         )}
+
+        <Link
+          className="absolute inset-0"
+          href={Paths.Organizer.ManageEvent(event.id)}
+        />
       </div>
       <div className="flex flex-col justify-center gap-2">
         <div className="item-center flex flex-row gap-3">
