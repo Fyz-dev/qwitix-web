@@ -1,4 +1,5 @@
 import { MapPin, Tag, Ticket } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -20,8 +21,27 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
     <Card className="relative gap-2 pt-0">
       <Link href={Paths.Main.Event(event.id)} className="absolute inset-0" />
 
-      <div className="bg-muted flex h-[184px] w-full items-center justify-center rounded-xl">
-        <Ticket className="size-12" />
+      <div className="bg-muted relative flex h-[184px] w-full items-center justify-center overflow-hidden rounded-xl">
+        {event.imgUrl ? (
+          <>
+            <div
+              className="absolute inset-0 bg-center"
+              style={{
+                backgroundImage: `url(${event.imgUrl})`,
+                filter: 'blur(10px)',
+              }}
+            />
+            <Image
+              width={500}
+              height={500}
+              src={event.imgUrl}
+              alt={event.title}
+              className="relative h-full w-full object-contain"
+            />
+          </>
+        ) : (
+          <Ticket />
+        )}
       </div>
       <CardContent className="flex flex-row items-center gap-6">
         <div className="flex flex-col text-center font-semibold">

@@ -1,4 +1,5 @@
 import { CalendarDays, MapPin, Ticket } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -34,8 +35,27 @@ const EventPage: FC<EventPageProps> = ({ event }) => {
         event={event}
       />
 
-      <div className="bg-muted flex h-[348px] w-full items-center justify-center rounded-xl">
-        <Ticket className="size-12" />
+      <div className="bg-muted relative flex h-[348px] w-full items-center justify-center overflow-hidden rounded-xl">
+        {event.imgUrl ? (
+          <>
+            <div
+              className="absolute inset-0 bg-center"
+              style={{
+                backgroundImage: `url(${event.imgUrl})`,
+                filter: 'blur(10px)',
+              }}
+            />
+            <Image
+              width={500}
+              height={500}
+              src={event.imgUrl}
+              alt={event.title}
+              className="relative h-full w-full object-contain"
+            />
+          </>
+        ) : (
+          <Ticket />
+        )}
       </div>
       <section className="flex justify-between">
         <div className="flex flex-2/3 flex-col gap-4">

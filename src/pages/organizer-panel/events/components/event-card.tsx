@@ -10,6 +10,7 @@ import {
   Ticket,
   Trash2,
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { toast } from 'sonner';
@@ -60,8 +61,27 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         className="absolute inset-0"
         href={Paths.Organizer.ManageEvent(event.id)}
       />
-      <div className="bg-muted flex h-[70px] w-[110px] items-center justify-center rounded-xl">
-        <Ticket />
+      <div className="bg-muted relative flex h-[70px] w-[110px] items-center justify-center overflow-hidden rounded-xl">
+        {event.imgUrl ? (
+          <>
+            <div
+              className="absolute inset-0 bg-center"
+              style={{
+                backgroundImage: `url(${event.imgUrl})`,
+                filter: 'blur(10px)',
+              }}
+            />
+            <Image
+              width={500}
+              height={500}
+              src={event.imgUrl}
+              alt={event.title}
+              className="relative h-full w-full object-contain"
+            />
+          </>
+        ) : (
+          <Ticket />
+        )}
       </div>
       <div className="flex flex-col justify-center gap-2">
         <div className="item-center flex flex-row gap-3">
