@@ -116,7 +116,6 @@ const EventPublishDialog: FC<EventDeleteDialogProps> = ({
                       {...field}
                       min={tomorrow}
                       use12HourFormat
-                      timePicker={{ hour: true, minute: true }}
                       modal
                     />
                   </FormControl>
@@ -138,7 +137,6 @@ const EventPublishDialog: FC<EventDeleteDialogProps> = ({
                       {...field}
                       min={startDate}
                       use12HourFormat
-                      timePicker={{ hour: true, minute: true }}
                       modal
                     />
                   </FormControl>
