@@ -15,7 +15,7 @@ const TransactionTicketCard: FC<TransactionTicketCardProps> = ({ ticket }) => {
     <Link
       key={ticket.id}
       href={Paths.Main.Event(ticket.eventId)}
-      className="block rounded-md bg-gray-50 p-2 text-sm"
+      className="dark:bg-gray-00 dark:bg-card block rounded-md bg-gray-50 p-2 text-sm dark:border"
     >
       <div className="mb-1 flex items-center justify-between">
         <span className="font-medium">{ticket.name}</span>

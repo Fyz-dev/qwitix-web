@@ -75,7 +75,7 @@ const BannerCard: FC<BannerCardProps> = ({ event }) => {
             variant="destructive"
             size="icon"
             aria-label="Delete image"
-            className="hover:bg-destructive"
+            className="hover:bg-destructive bg-destructive!"
           >
             <Trash2 className="h-5 w-5" />
           </Button>
