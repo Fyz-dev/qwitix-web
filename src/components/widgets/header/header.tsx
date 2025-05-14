@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -18,14 +19,14 @@ const Header: FC = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-white">
       <div className="h-header container flex items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-6 md:gap-8 lg:gap-10">
-          <Link href="/" className="flex items-center space-x-2">
-            {/* <Image
-              src="/logo.svg"
-              alt="TickPick"
-              width={40}
-              height={40}
-              className="h-10 w-10"
-            /> */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/assets/logo.png"
+              alt="QwiTix"
+              width={250}
+              height={250}
+              className="size-20"
+            />
             <span className="text-5xl font-bold">QwiTix</span>
           </Link>
 
