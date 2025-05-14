@@ -30,12 +30,13 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @secure
    */
   createEvent = (data: CreateEventDTO, params: RequestParams = {}) =>
-    this.request<void, ProblemDetails | void>({
+    this.request<ResponseEventDTO, ProblemDetails | void>({
       path: `/api/event`,
       method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: 'json',
       ...params,
     });
   /**
@@ -146,6 +147,45 @@ export class Event<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
       method: 'GET',
       secure: true,
       format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Event
+   * @name UploadEventImage
+   * @request POST:/api/event/{id}/upload-image
+   * @secure
+   */
+  uploadEventImage = (
+    id: string,
+    data: {
+      /** @format binary */
+      Image?: File;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<void, ProblemDetails | void>({
+      path: `/api/event/${id}/upload-image`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.FormData,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Event
+   * @name DeleteEventImage
+   * @request DELETE:/api/event/{id}/delete-image
+   * @secure
+   */
+  deleteEventImage = (id: string, params: RequestParams = {}) =>
+    this.request<void, ProblemDetails | void>({
+      path: `/api/event/${id}/delete-image`,
+      method: 'DELETE',
+      secure: true,
       ...params,
     });
 }
