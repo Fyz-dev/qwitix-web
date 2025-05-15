@@ -22,7 +22,7 @@ export const getEventListKey = (
     query?.limit,
     query?.offset,
     query?.searchQuery,
-    query?.status,
+    query?.statuses,
   ] as const;
 export const getEventCategoryListKey = () => ['event', 'category'] as const;
 
