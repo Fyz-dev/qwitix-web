@@ -1,5 +1,8 @@
+'use client';
+
 import { LogOut, Settings, Ticket } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -22,6 +25,8 @@ interface AuthDropdownProps {
 }
 
 const AuthDropdown: FC<AuthDropdownProps> = ({ user, logout }) => {
+  const router = useRouter();
+
   const avatarFallback = user.fullName.slice(0, 2).toUpperCase();
 
   return (
@@ -73,7 +78,12 @@ const AuthDropdown: FC<AuthDropdownProps> = ({ user, logout }) => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem
+          onClick={() => {
+            logout();
+            router.push('/');
+          }}
+        >
           <LogOut />
           Log out
         </DropdownMenuItem>
