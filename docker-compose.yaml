@@ -1,6 +1,7 @@
 services:
   qwitix-web:
     build:
+      context: .
       dockerfile: Dockerfile
       args:
         - NEXT_PUBLIC_BASE_URL

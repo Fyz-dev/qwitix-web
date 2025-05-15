@@ -24,7 +24,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create .env file from secrets
-        run: echo "${{ secrets.ENV_FILE }}" > .env
+        run: echo "${{ secrets.ENV_FILE }}" > .env.production
 
       - name: Container registry login
         run: az acr login --name ${{ secrets.CONTAINER_NAME }}
