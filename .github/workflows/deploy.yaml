@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: development
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,22 +22,25 @@ jobs:
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
+
+      - name: Create .env file from secrets
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
       - name: Container registry login
         run: az acr login --name ${{ secrets.CONTAINER_NAME }}
 
       - name: Build and push to Azure Container Registry
         working-directory: ./
         run: |
-          docker compose build
+          docker compose --env-file .env build ${{ env.IMAGE_NAME }}
           docker tag ${{ env.IMAGE_NAME }} ${{ secrets.CONTAINER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
           docker push ${{ secrets.CONTAINER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
-          
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
     environment: development
-    
+
     steps:
       - name: Deploy to VM
         uses: appleboy/ssh-action@v1.2.1

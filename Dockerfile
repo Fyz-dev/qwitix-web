@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:23-alpine AS base
 
 # Install pnpm and corepack
 RUN npm install --global corepack@latest && corepack enable pnpm
@@ -6,6 +6,14 @@ RUN npm install --global corepack@latest && corepack enable pnpm
 # Install dependencies only when needed
 FROM base AS deps
 WORKDIR /app
+
+ARG NEXT_PUBLIC_BASE_URL
+ARG NEXT_PUBLIC_BASE_API_URL
+ARG API_SWAGGER_URL    
+
+ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
+ENV NEXT_PUBLIC_BASE_API_URL=$NEXT_PUBLIC_BASE_API_URL
+ENV API_SWAGGER_URL=$API_SWAGGER_URL
 
 # Install dependencies
 COPY package.json pnpm-lock.yaml* .npmrc* ./

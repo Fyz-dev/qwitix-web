@@ -2,8 +2,13 @@ services:
   qwitix-web:
     build:
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_BASE_URL
+        - NEXT_PUBLIC_BASE_API_URL
+        - API_SWAGGER_URL
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=development
+
     image: qwitix-web
