@@ -6,12 +6,20 @@ import { Paths } from './utils/paths';
 
 export async function middleware(request: NextRequest) {
   try {
-    const token = await getAccessTokenFromServer();
+    let tokenSession = await getAccessTokenFromServer();
 
-    if (!token)
-      return NextResponse.redirect(new URL(Paths.Unauthorized, request.url));
+    if (!tokenSession) {
+      const {
+        data: { token },
+      } = await accountQueryClient().getAccount();
 
-    const res = await accountQueryClient(token).isAuthorized();
+      if (!token)
+        return NextResponse.redirect(new URL(Paths.Unauthorized, request.url));
+
+      tokenSession = token;
+    }
+
+    const res = await accountQueryClient(tokenSession).isAuthorized();
 
     if (res.status !== 200)
       return NextResponse.redirect(new URL(Paths.Unauthorized, request.url));
