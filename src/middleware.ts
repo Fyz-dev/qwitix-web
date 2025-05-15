@@ -12,10 +12,6 @@ export async function middleware(request: NextRequest) {
         `${process.env.NEXT_PUBLIC_API_URL}/api/account`,
         {
           credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Cookie: request.headers.get('cookie') || '',
-          },
         },
       );
 
