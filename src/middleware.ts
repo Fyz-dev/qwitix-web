@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
 
     if (!tokenSession) {
       const accountRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/account`,
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}api/account`,
         {
           credentials: 'include',
         },
@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
     }
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/account/authorize`,
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}api/account/authorize`,
       {
         method: 'GET',
         headers: {
