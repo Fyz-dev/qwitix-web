@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { accountQueryClient } from './queries/query-clients';
 import { getAccessTokenFromServer } from './utils/auth';
 import { Paths } from './utils/paths';
 
@@ -9,17 +8,34 @@ export async function middleware(request: NextRequest) {
     let tokenSession = await getAccessTokenFromServer();
 
     if (!tokenSession) {
-      const {
-        data: { token },
-      } = await accountQueryClient().getAccount();
+      const accountRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/account`,
+        {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Cookie: request.headers.get('cookie') || '',
+          },
+        },
+      );
 
-      if (!token)
+      const { token: receivedToken } = await accountRes.json();
+
+      if (!receivedToken)
         return NextResponse.redirect(new URL(Paths.Unauthorized, request.url));
 
-      tokenSession = token;
+      tokenSession = receivedToken;
     }
 
-    const res = await accountQueryClient(tokenSession).isAuthorized();
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/account/authorize`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${tokenSession}`,
+        },
+      },
+    );
 
     if (res.status !== 200)
       return NextResponse.redirect(new URL(Paths.Unauthorized, request.url));
