@@ -47,8 +47,8 @@ const CartBuyDrawer: FC<CartBuyDrawerProps> = ({ open, onOpenChange }) => {
         ticketId: item.ticket.id,
         quantity: item.quantity,
       })),
-      successUrl: `${Paths.BaseUrl}${Paths.Main.Event(cart[0].ticket.eventId)}`,
-      cancelUrl: `${Paths.BaseUrl}${Paths.Main.Event(cart[0].ticket.eventId)}`,
+      successUrl: `${Paths.BaseUrl}${Paths.SuccessBuyTickets}`,
+      cancelUrl: `${Paths.BaseUrl}${Paths.CancelBuyTickets}`,
     });
 
     router.push(url);

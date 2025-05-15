@@ -2,6 +2,8 @@ type QueryParams = Record<string, string | number | boolean | undefined>;
 
 export const Paths = {
   BaseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+  CancelBuyTickets: '/cancel-buy-tickets',
+  SuccessBuyTickets: '/success-buy-tickets',
   Unauthorized: '/unauthorized',
   Organizer: {
     Login: '/login-organizer',
