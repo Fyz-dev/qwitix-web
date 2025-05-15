@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, {
   createContext,
   useContext,
@@ -11,6 +12,7 @@ import React, {
 import { Account } from '@/gen/Account';
 import { useAuthUser } from '@/stores';
 import { authUserOnServer } from '@/utils/auth/server';
+import { Paths } from '@/utils/paths';
 
 interface SessionContextProps {
   token?: string;
@@ -24,6 +26,8 @@ export const SessionProvider: React.FC<{
   children: ReactNode;
   token?: string;
 }> = ({ children, token }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const tokenRef = useRef<string | undefined>(token);
 
   const login = useAuthUser(state => state.login);
@@ -34,10 +38,18 @@ export const SessionProvider: React.FC<{
       withCredentials: true,
     })
       .getAccount()
-      .then(res => {
+      .then(async res => {
         login(res.data.user);
 
-        authUserOnServer(res.data);
+        await authUserOnServer(res.data);
+
+        const params = new URLSearchParams(searchParams.toString());
+        const isRedirectToOrganizer = params.get('redirect') === 'organizer';
+
+        params.delete('redirect');
+
+        if (isRedirectToOrganizer) router.push(Paths.Organizer.Events);
+        else router.replace(`?${params.toString()}`);
       })
       .catch(() => login(undefined));
   }, []);

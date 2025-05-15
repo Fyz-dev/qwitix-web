@@ -9,7 +9,7 @@ const LiveEndedEvent: FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const isChecked = searchParams?.get('live-ended') === 'true';
+  const isChecked = searchParams?.get('ended') === 'true';
 
   const handleChange = (checked: boolean) => {
     const params = new URLSearchParams(searchParams?.toString());

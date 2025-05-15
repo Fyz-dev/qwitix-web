@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -18,9 +19,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateOrganizerMutation } from '@/queries/hooks/organizer';
+import { Paths } from '@/utils/paths';
 import { organizerSchema, OrganizerSchemaType } from '@/validations/organizer';
 
 const RegisterForm: FC = () => {
+  const router = useRouter();
   const createOrganizerMutation = useCreateOrganizerMutation();
 
   const form = useForm<OrganizerSchemaType>({
@@ -41,6 +44,10 @@ const RegisterForm: FC = () => {
       loading: 'Creating organizer...',
       success: () => 'Organizer successfully created!',
       error: 'Failed to create organizer.',
+    });
+
+    promise.then(() => {
+      router.push(`${Paths.BaseUrl}?redirect=organizer`);
     });
   };
 
