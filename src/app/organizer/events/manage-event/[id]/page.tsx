@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import ManageEventPage from '@/pages/organizer-panel/events/manage-event';
+import ManageEventPage from '@/screens/organizer-panel/events/manage-event';
 import { eventQueryClient } from '@/queries/query-clients';
 import { getAccessTokenFromServer } from '@/utils/auth';
 

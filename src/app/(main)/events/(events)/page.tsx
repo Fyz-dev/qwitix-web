@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { EVENT_PAGINATION_PAGE_SIZE } from '@/const';
 import { EventStatus } from '@/gen/data-contracts';
-import EventsPage from '@/pages/main/events';
+import EventsPage from '@/screens/main/events';
 import { eventQueryClient } from '@/queries/query-clients';
 import { TSearchParams } from '@/types';
 import { getAccessTokenFromServer } from '@/utils/auth';

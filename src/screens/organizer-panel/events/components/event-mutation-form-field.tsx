@@ -1,6 +1,6 @@
 'use client';
 
-import { CloudUpload, Edit, Plus, X } from 'lucide-react';
+import { Edit, Plus } from 'lucide-react';
 import { FC, PropsWithChildren } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 

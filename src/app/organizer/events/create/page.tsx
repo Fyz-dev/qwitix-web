@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import EventCreatePage from '@/pages/organizer-panel/events/create';
+import EventCreatePage from '@/screens/organizer-panel/events/create';
 
 const CreatePage: FC = () => {
   return <EventCreatePage />;

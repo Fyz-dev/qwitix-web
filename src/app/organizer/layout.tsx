@@ -11,7 +11,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/widgets/organizer-panel/app-sidebar';
-import { OrganizerStoreProvider } from '@/pages/organizer-panel/providers/organizer-provider';
+import { OrganizerStoreProvider } from '@/screens/organizer-panel/providers/organizer-provider';
 
 export default function Layout({
   children,

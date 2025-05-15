@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import MyAccountDashboardPage from '@/pages/main/my-account/dashboard';
+import MyAccountDashboardPage from '@/screens/main/my-account/dashboard';
 
 const AccountDashboard: FC = () => {
   return <MyAccountDashboardPage />;

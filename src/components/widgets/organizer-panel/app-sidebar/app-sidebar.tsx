@@ -14,7 +14,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar';
-import { useOrganizerStore } from '@/pages/organizer-panel/providers/organizer-provider';
+import { useOrganizerStore } from '@/screens/organizer-panel/providers/organizer-provider';
 import { useAuthUser } from '@/stores';
 import { Paths } from '@/utils/paths';
 

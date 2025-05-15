@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import BuyTicketsPage from '@/pages/main/buy-tickets';
+import BuyTicketsPage from '@/screens/main/buy-tickets';
 import { eventQueryClient, ticketQueryClient } from '@/queries/query-clients';
 import { getAccessTokenFromServer } from '@/utils/auth';
 

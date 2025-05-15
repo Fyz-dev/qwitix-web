@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import AppearancePage from '@/pages/organizer-panel/settings/appearance';
+import AppearancePage from '@/screens/organizer-panel/settings/appearance';
 
 const Appearance: FC = () => {
   return <AppearancePage />;

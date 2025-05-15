@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import EventsPage from '@/pages/organizer-panel/events';
+import EventsPage from '@/screens/organizer-panel/events';
 
 const Page: FC = () => {
   return <EventsPage />;

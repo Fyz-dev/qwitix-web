@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import MyAccountNavbar from '@/pages/main/my-account/components/my-account-navbar';
+import MyAccountNavbar from '@/screens/main/my-account/components/my-account-navbar';
 
 export default function Layout({
   children,

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import ProfilePage from '@/pages/main/my-account/settings/profile';
+import ProfilePage from '@/screens/main/my-account/settings/profile';
 
 const Profile: FC = () => {
   return <ProfilePage />;

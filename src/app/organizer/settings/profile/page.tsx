@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import ProfilePage from '@/pages/organizer-panel/settings/profile';
+import ProfilePage from '@/screens/organizer-panel/settings/profile';
 
 const OrganizerSettingPage: FC = () => {
   return <ProfilePage />;
