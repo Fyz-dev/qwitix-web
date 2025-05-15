@@ -2,6 +2,7 @@
 
 import { Minus, Plus } from 'lucide-react';
 import { FC } from 'react';
+import { toast } from 'sonner';
 
 import { useCartStore } from '../providers/cart-store-provider';
 
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ResponseTicketWithSoldDTO } from '@/gen/data-contracts';
 import { cn } from '@/lib/utils';
+import { useAuthUser } from '@/stores';
 
 interface TicketCardProps {
   ticket: ResponseTicketWithSoldDTO;
@@ -16,6 +18,8 @@ interface TicketCardProps {
 }
 
 const TicketCard: FC<TicketCardProps> = ({ ticket, isReadonly }) => {
+  const user = useAuthUser(state => state.user);
+
   const quantity = useCartStore(state => {
     const item = state.cart.find(i => i.ticket.id === ticket.id);
     return item?.quantity ?? 0;
@@ -61,7 +65,16 @@ const TicketCard: FC<TicketCardProps> = ({ ticket, isReadonly }) => {
           ) : (
             <div className="flex items-center justify-center gap-6">
               <Button
-                onClick={() => remove(ticket.id)}
+                onClick={() => {
+                  if (!user) {
+                    toast.info(
+                      'Please log in to remove tickets from your cart',
+                    );
+                    return;
+                  }
+
+                  remove(ticket.id);
+                }}
                 variant="outline"
                 size="icon"
                 className="text-primary border-primary hover:text-primary hover:border-primary"
@@ -79,7 +92,14 @@ const TicketCard: FC<TicketCardProps> = ({ ticket, isReadonly }) => {
               </span>
 
               <Button
-                onClick={() => add(ticket)}
+                onClick={() => {
+                  if (!user) {
+                    toast.info('Please login to add tickets to your cart');
+                    return;
+                  }
+
+                  add(ticket);
+                }}
                 variant="outline"
                 size="icon"
                 className="text-primary border-primary hover:text-primary hover:border-primary"

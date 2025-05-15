@@ -35,7 +35,7 @@ export const useCreateEventMutation = () => {
       return await eventQueryClient(token).createEvent(data);
     },
     onSuccess: response => {
-      if (response.status === 204)
+      if (response.status === 201)
         queryClient.invalidateQueries({
           queryKey: getEventListPrefixKey(),
         });
