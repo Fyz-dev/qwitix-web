@@ -37,7 +37,7 @@ const LiveEndedEvent: FC = () => {
           htmlFor="live-ended"
           className="text-sm leading-none font-medium capitalize peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          Display live and ended events?
+          Display live and ended events
         </label>
       </div>
     </div>

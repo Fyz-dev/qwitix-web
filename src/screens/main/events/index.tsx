@@ -14,7 +14,7 @@ const EventsPage: FC<EventsProps> = ({ events }) => {
   return (
     <div className="flex min-h-[calc(100svh-(var(--spacing-header)+112px))] w-full flex-col gap-4">
       {events.items.length !== 0 ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 grid-rows-3 gap-4">
           {events.items.map(event => (
             <EventCard key={event.id} event={event} />
           ))}
