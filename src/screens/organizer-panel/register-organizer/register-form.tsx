@@ -47,7 +47,7 @@ const RegisterForm: FC = () => {
     });
 
     promise.then(() => {
-      router.push(`${Paths.BaseUrl}?redirect=organizer`);
+      router.push(Paths.Organizer.Events);
     });
   };
 
