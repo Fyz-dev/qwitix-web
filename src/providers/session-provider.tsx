@@ -29,22 +29,8 @@ export const SessionProvider: React.FC<{
   const router = useRouter();
   const searchParams = useSearchParams();
   const tokenRef = useRef<string | undefined>(token);
-  const hasMountedRef = useRef(false);
 
   const login = useAuthUser(state => state.login);
-
-  const handleRedirect = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    const isRedirectToOrganizer = params.get('redirect') === 'organizer';
-
-    params.delete('redirect');
-
-    if (isRedirectToOrganizer) {
-      router.push(Paths.Organizer.Events);
-    } else {
-      router.replace(`?${params.toString()}`);
-    }
-  };
 
   useEffect(() => {
     new Account({
@@ -57,9 +43,16 @@ export const SessionProvider: React.FC<{
 
         await authUserOnServer(res.data);
 
-        handleRedirect();
+        const params = new URLSearchParams(searchParams.toString());
+        const isRedirectToOrganizer = params.get('redirect') === 'organizer';
 
-        hasMountedRef.current = true;
+        params.delete('redirect');
+
+        if (isRedirectToOrganizer) {
+          router.push(Paths.Organizer.Events);
+        } else {
+          router.replace(`?${params.toString()}`);
+        }
       })
       .catch(() => login(undefined));
   }, []);
