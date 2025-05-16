@@ -3,10 +3,16 @@ export function formatDateShort(
 ): { month: string; day: number } | null {
   if (!date) return null;
 
-  const month = date.toLocaleString('en-US', { month: 'short' });
-  const day = date.getDate();
+  const month = date.toLocaleString('en-US', {
+    month: 'short',
+    timeZone: 'UTC',
+  });
+  const day = new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
 
-  return { month, day };
+  return { month, day: Number(day) };
 }
 
 export function formatFullDateTime(date?: Date) {
@@ -16,15 +22,15 @@ export function formatFullDateTime(date?: Date) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'UTC',
   });
 
-  const formattedTime = date
-    .toLocaleTimeString('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    })
-    .replace(':', '.');
+  const formattedTime = date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'UTC',
+  });
 
   return `${formattedDate} · ${formattedTime}`;
 }

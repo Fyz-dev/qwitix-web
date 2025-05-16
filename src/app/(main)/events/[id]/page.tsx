@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import EventPage from '@/screens/main/event';
 import { eventQueryClient } from '@/queries/query-clients';
+import EventPage from '@/screens/main/event';
 import { getAccessTokenFromServer } from '@/utils/auth';
 
 interface EventPageProps {
