@@ -4,7 +4,7 @@ import FilterEvents from './components/filter-events';
 
 const EventsLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="mt-14 flex gap-9">
+    <div className="my-14 flex gap-9">
       <FilterEvents />
       {children}
     </div>
