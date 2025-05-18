@@ -9,7 +9,6 @@ import {
   getAccountOrganizerKey,
   getOrganizerKey,
   getOrganizerListKey,
-  getOrganizerListPrefixKey,
 } from './query-key-helper';
 
 import { CreateOrganizerDTO, ProblemDetails } from '@/gen/data-contracts';
@@ -30,7 +29,7 @@ export const useCreateOrganizerMutation = () => {
     onSuccess: response => {
       if (response.status === 204)
         queryClient.invalidateQueries({
-          queryKey: getOrganizerListPrefixKey(),
+          queryKey: getAccountOrganizerKey(),
         });
     },
   });
