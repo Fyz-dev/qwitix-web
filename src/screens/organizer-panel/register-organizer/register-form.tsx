@@ -35,7 +35,7 @@ const RegisterForm: FC = () => {
     },
   });
 
-  const onSubmit = (data: OrganizerSchemaType) => {
+  const onSubmit = async (data: OrganizerSchemaType) => {
     const promise = createOrganizerMutation.mutateAsync({
       ...data,
     });
@@ -49,6 +49,8 @@ const RegisterForm: FC = () => {
     promise.then(() => {
       router.push(Paths.Organizer.Events);
     });
+
+    await promise;
   };
 
   return (
