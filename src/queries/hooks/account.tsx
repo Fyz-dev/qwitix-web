@@ -19,7 +19,6 @@ export const useAccountOrganizerQuery = () => {
 
   return useSuspenseQuery({
     queryKey: getAccountOrganizerKey(),
-    retry: 0,
     queryFn: async () => {
       try {
         return await accountQueryClient(token).getOrganizerAccount();
