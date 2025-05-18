@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 
 import { accountQueryClient } from '../query-clients';
 
-import { getAccountOrganizerKey } from './query-key-helper';
+import { getAccountOrganizerKey, getGoogleLoginKey } from './query-key-helper';
 
 import { ProblemDetails, UpdateUserDTO } from '@/gen/data-contracts';
 import { useSession } from '@/providers/session-provider';
@@ -37,7 +37,7 @@ export const useGoogleLoginUrlQuery = (
   const { token } = useSession();
 
   return useSuspenseQuery({
-    queryKey: getAccountOrganizerKey(),
+    queryKey: getGoogleLoginKey(),
     queryFn: async () => {
       return await accountQueryClient(token).getGoogleLoginUrl(query);
     },

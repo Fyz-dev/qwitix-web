@@ -4,6 +4,8 @@ import {
   transactionQueryClient,
 } from '../query-clients';
 
+export const getGoogleLoginKey = () => ['google'] as const;
+
 export const getAccountOrganizerKey = () => ['account', 'organizer'] as const;
 
 export const getOrganizerListPrefixKey = () => ['organizer', 'list'] as const;
