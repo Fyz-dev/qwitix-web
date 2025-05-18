@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -9,14 +9,13 @@ import { Paths } from '@/utils/paths';
 
 const LoginButton: FC = () => {
   const router = useRouter();
-  const pathName = usePathname();
 
   const {
     data: {
       data: { url },
     },
   } = useGoogleLoginUrlQuery({
-    returnUrl: `${Paths.BaseUrl}${pathName}`,
+    returnUrl: `${Paths.BaseUrl}`,
   });
 
   return (
