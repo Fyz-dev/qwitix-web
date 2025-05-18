@@ -12,13 +12,18 @@ import EventInfo from './event-info';
 import ManageForm from './manage-form';
 
 import { Separator } from '@/components/ui/separator';
-import { EventStatus, ResponseEventDTO } from '@/gen/data-contracts';
+import { EventStatus } from '@/gen/data-contracts';
+import { useEventQuery } from '@/queries/hooks/event';
 
 interface ManageEventPageProps {
-  event: ResponseEventDTO;
+  eventId: string;
 }
 
-const ManageEventPage: FC<ManageEventPageProps> = ({ event }) => {
+const ManageEventPage: FC<ManageEventPageProps> = ({ eventId }) => {
+  const {
+    data: { data: event },
+  } = useEventQuery(eventId);
+
   return (
     <EventStoreProvider event={event}>
       <TicketStoreProvider>

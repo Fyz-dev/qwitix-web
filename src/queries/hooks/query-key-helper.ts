@@ -14,6 +14,7 @@ export const getOrganizerListKey = (limit?: number, offset?: number) =>
 export const getOrganizerKey = (organizerId: string) =>
   ['organizer', organizerId] as const;
 
+export const getEventKey = (eventId: string) => ['event', eventId] as const;
 export const getEventListPrefixKey = () => ['event', 'list'] as const;
 export const getEventListKey = (
   query: Parameters<ReturnType<typeof eventQueryClient>['getEventList']>[0],

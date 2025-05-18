@@ -9,6 +9,7 @@ import { eventQueryClient } from '../query-clients';
 
 import {
   getEventCategoryListKey,
+  getEventKey,
   getEventListKey,
   getEventListPrefixKey,
 } from './query-key-helper';
@@ -63,6 +64,17 @@ export const usePublishEventMutation = (id: string) => {
   });
 };
 
+export const useEventQuery = (id: string) => {
+  const { token } = useSession();
+
+  return useSuspenseQuery({
+    queryKey: getEventKey(id),
+    queryFn: async () => {
+      return await eventQueryClient(token).getEvent(id);
+    },
+  });
+};
+
 export const useInfiniteEventsQuery = (
   query: Omit<
     Parameters<ReturnType<typeof eventQueryClient>['getEventList']>[0],
@@ -101,10 +113,15 @@ export const useUpdateEventMutation = (id: string) => {
         return await eventQueryClient(token).updateEvent(id, data);
       },
       onSuccess: response => {
-        if (response.status === 200)
+        if (response.status === 200) {
           queryClient.invalidateQueries({
             queryKey: getEventListPrefixKey(),
           });
+
+          queryClient.invalidateQueries({
+            queryKey: getEventKey(id),
+          });
+        }
       },
     },
   );
@@ -151,7 +168,7 @@ export const useUploadImageEventMutation = () => {
       return await eventQueryClient(token).uploadEventImage(data.id, data);
     },
     onSuccess: response => {
-      if (response.status === 204)
+      if (response.status === 200)
         queryClient.invalidateQueries({
           queryKey: getEventListPrefixKey(),
         });
