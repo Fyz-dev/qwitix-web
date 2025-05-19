@@ -5,10 +5,11 @@ export function formatDateShort(
 
   const month = date.toLocaleString('en-US', {
     month: 'short',
-    timeZone: 'UTC',
+    timeZone: 'Europe/Kyiv',
   });
   const day = new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
+    timeZone: 'Europe/Kyiv',
   }).format(date);
 
   return { month, day: Number(day) };
@@ -21,12 +22,14 @@ export function formatFullDateTime(date?: Date) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'Europe/Kyiv',
   });
 
   const formattedTime = date.toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
+    timeZone: 'Europe/Kyiv',
   });
 
   return `${formattedDate} · ${formattedTime}`;
