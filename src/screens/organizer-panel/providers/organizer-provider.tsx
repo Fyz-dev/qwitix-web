@@ -17,7 +17,6 @@ import {
   OrganizerStoreApi,
 } from '../stores/organizer-store';
 
-import { Spinner } from '@/components/ui/spinner';
 import { useAccountOrganizerQuery } from '@/queries/hooks/account';
 import { Paths } from '@/utils/paths';
 
@@ -48,13 +47,7 @@ export const OrganizerStoreProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <OrganizerStoreContext.Provider value={storeRef.current}>
-      {accountOrganizer.id ? (
-        children
-      ) : (
-        <div className="absolute inset-x-0 flex size-full flex-col items-center justify-center">
-          <Spinner size="large" />
-        </div>
-      )}
+      {accountOrganizer.id && children}
     </OrganizerStoreContext.Provider>
   );
 };
