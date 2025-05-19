@@ -9,7 +9,6 @@ export function formatDateShort(
   });
   const day = new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
-    timeZone: 'UTC',
   }).format(date);
 
   return { month, day: Number(day) };
@@ -22,14 +21,12 @@ export function formatFullDateTime(date?: Date) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    timeZone: 'UTC',
   });
 
   const formattedTime = date.toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
-    timeZone: 'UTC',
   });
 
   return `${formattedDate} · ${formattedTime}`;
